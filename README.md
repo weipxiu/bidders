@@ -1,4 +1,9 @@
-# bidders
+# 嵩恒拍卖系统（bidders）
+
+### 基于vue.js2.0 + cli 3.0 + Element UI开发
+```
+npm run lint
+```
 
 ## Project setup
 ```
