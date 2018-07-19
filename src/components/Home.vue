@@ -28,7 +28,7 @@
                   </el-menu>
                 </div>
               </el-col>
-              <el-col :span="10">
+              <el-col :span="8">
                 <div class="grid-content bg-purple">
                   <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
                     <el-menu-item index="1">综合排序</el-menu-item>
@@ -55,10 +55,130 @@
               </el-col>
             </el-row>
           </div>
-
           <!-- 商品列表 -->
           <div class="comList">
-
+            <el-row :gutter="20" type="" class="row-bg" justify="space-between">
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
+                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
+                  <div class="parameter">
+                    <el-row>
+                      <el-col :span="5">当前价</el-col>
+                      <el-col :span="19">450元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">起拍价</el-col>
+                      <el-col :span="19">300元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">预 计</el-col>
+                      <el-col :span="19">7月21日 10:00结束</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">参与数</el-col>
+                      <el-col :span="19">11人报名</el-col>
+                    </el-row>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
+                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
+                  <div class="parameter">
+                    <el-row>
+                      <el-col :span="5">当前价</el-col>
+                      <el-col :span="19">450元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">起拍价</el-col>
+                      <el-col :span="19">300元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">预 计</el-col>
+                      <el-col :span="19">7月21日 10:00结束</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">参与数</el-col>
+                      <el-col :span="19">11人报名</el-col>
+                    </el-row>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
+                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
+                  <div class="parameter">
+                    <el-row>
+                      <el-col :span="5">当前价</el-col>
+                      <el-col :span="19">450元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">起拍价</el-col>
+                      <el-col :span="19">300元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">预 计</el-col>
+                      <el-col :span="19">7月21日 10:00结束</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">参与数</el-col>
+                      <el-col :span="19">11人报名</el-col>
+                    </el-row>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
+                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
+                  <div class="parameter">
+                    <el-row>
+                      <el-col :span="5">当前价</el-col>
+                      <el-col :span="19">450元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">起拍价</el-col>
+                      <el-col :span="19">300元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">预 计</el-col>
+                      <el-col :span="19">7月21日 10:00结束</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">参与数</el-col>
+                      <el-col :span="19">11人报名</el-col>
+                    </el-row>
+                  </div>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div class="grid-content bg-purple">
+                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
+                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
+                  <div class="parameter">
+                    <el-row>
+                      <el-col :span="5">当前价</el-col>
+                      <el-col :span="19">450元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">起拍价</el-col>
+                      <el-col :span="19">300元</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">预 计</el-col>
+                      <el-col :span="19">7月21日 10:00结束</el-col>
+                    </el-row>
+                    <el-row>
+                      <el-col :span="5">参与数</el-col>
+                      <el-col :span="19">11人报名</el-col>
+                    </el-row>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
           </div>
         </div>
       </el-main>
@@ -98,8 +218,11 @@ export default {
   width: 1200px;
   margin: 0 auto;
 }
-.nav {
+.content .nav {
   background: #545c64;
+  height:36px;
+  line-height: 36px;
+  overflow: hidden;
 }
 .content {
   width: 1200px;
@@ -117,8 +240,44 @@ export default {
   text-align: center;
 }
 /*商品列表*/
-.comList{
-  width:100%;
-  margin:0 auto;
+.comList {
+  width: 100%;
+  margin: 20px auto;
 }
+.comImg {
+  width: 100%;
+  height: 178px;
+}
+.comList .title {
+  height: 32px;
+  line-height: 32px;
+  text-indent: 15px;
+  font-size: 14px;
+  color: #333;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid #eee;
+}
+.comList .grid-content {
+  border: 1px solid #eee;
+}
+.comList .grid-content {
+  margin-bottom: 20px;
+}
+.comList .grid-content .el-row .el-col {
+  font-size: 14px;
+  color: #333;
+  text-indent: 15px;
+  height: 28px;
+  line-height: 28px;
+}
+.comList .grid-content .parameter {
+  padding: 15px 0;
+}
+.el-menu-item, .el-submenu__title,.el-menu--horizontal>.el-submenu .el-submenu__title,.el-menu--horizontal>.el-menu-item,.el-submenu{
+  height:36px;
+  line-height: 36px;
+}
+
 </style>
