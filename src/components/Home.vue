@@ -1,49 +1,75 @@
 <template>
   <div class="hello">
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="活动名称">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="活动区域">
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="活动时间">
-        <el-col :span="11">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="即时配送">
-        <el-switch v-model="form.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="活动性质">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="活动形式">
-        <el-input type="textarea" v-model="form.desc"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button>取消</el-button>
-      </el-form-item>
-    </el-form>
+    <el-container>
+      <el-header class="sh_header">
+        <div class="sh_header_centent">
+          <el-row type="flex" justify="space-between" class="row-bg">
+            <el-col :span="4">
+              <div class="grid-content bg-purple">
+                <a href=""><img src="http://mini.eastday.com/indexStatic/image/new_logo.png?20180718171754" height="60" alt=""></a>
+              </div>
+            </el-col>
+            <el-col :span="4">
+              <div class="grid-content bg-purple-light">个人中心</div>
+            </el-col>
+          </el-row>
+        </div>
+      </el-header>
+
+      <!-- 正文 -->
+      <el-main>
+        <div class="content">
+          <div class="nav">
+            <el-row type="flex" justify="space-between" class="row-bg">
+              <el-col :span="4">
+                <div class="grid-content bg-purple">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                    <el-menu-item index="1">正在拍卖</el-menu-item>
+                  </el-menu>
+                </div>
+              </el-col>
+              <el-col :span="10">
+                <div class="grid-content bg-purple">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                    <el-menu-item index="1">综合排序</el-menu-item>
+                    <el-submenu index="2">
+                      <template slot="title">时间</template>
+                      <el-menu-item index="2-1">选项1</el-menu-item>
+                      <el-menu-item index="2-2">选项2</el-menu-item>
+                      <el-menu-item index="2-3">选项3</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="3">
+                      <template slot="title">价格</template>
+                      <el-menu-item index="3-1">选项1</el-menu-item>
+                      <el-menu-item index="3-2">选项2</el-menu-item>
+                      <el-menu-item index="3-3">选项3</el-menu-item>
+                    </el-submenu>
+                    <el-submenu index="4">
+                      <template slot="title">拍卖状态</template>
+                      <el-menu-item index="4-1">选项1</el-menu-item>
+                      <el-menu-item index="4-2">选项2</el-menu-item>
+                      <el-menu-item index="4-3">选项3</el-menu-item>
+                    </el-submenu>
+                  </el-menu>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+
+          <!-- 商品列表 -->
+          <div class="comList">
+
+          </div>
+        </div>
+      </el-main>
+
+      <!-- 底部 -->
+      <el-footer>
+        <div class="sh_footer">
+          嵩恒网络科技有限公司拍卖系统
+        </div>
+      </el-footer>
+    </el-container>
   </div>
 </template>
 
@@ -51,21 +77,13 @@
 export default {
   data() {
     return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
+      activeIndex: '1',
+      activeIndex2: '1'
     }
   },
   methods: {
-    onSubmit() {
-      console.log('submit!');
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
     }
   }
 }
@@ -73,18 +91,34 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.sh_header {
+  background: #f44b50;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.sh_header_centent {
+  width: 1200px;
+  margin: 0 auto;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.nav {
+  background: #545c64;
 }
-a {
-  color: #42b983;
+.content {
+  width: 1200px;
+  margin: 0 auto;
+}
+.sh_footer {
+  width: 1200px;
+  margin: 0 auto;
+}
+.el-footer {
+  background: #3a3a3a;
+  font-size: 16px;
+  line-height: 60px;
+  color: #fff;
+  text-align: center;
+}
+/*商品列表*/
+.comList{
+  width:100%;
+  margin:0 auto;
 }
 </style>
