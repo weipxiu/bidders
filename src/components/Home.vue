@@ -6,7 +6,7 @@
           <el-row type="flex" justify="space-between" class="row-bg">
             <el-col :span="4">
               <div class="grid-content bg-purple">
-                <a href=""><img src="http://mini.eastday.com/indexStatic/image/new_logo.png?20180718171754" height="60" alt=""></a>
+                <a href=""><img src="@/assets/images/logo.png" width="245" height="60" alt=""></a>
               </div>
             </el-col>
             <el-col :span="4">
@@ -65,7 +65,9 @@
                   <div class="parameter">
                     <el-row>
                       <el-col :span="5">当前价</el-col>
-                      <el-col :span="19">450元</el-col>
+                      <el-col :span="19">
+                        <span class="price">450元</span>
+                      </el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">起拍价</el-col>
@@ -73,11 +75,15 @@
                     </el-row>
                     <el-row>
                       <el-col :span="5">预 计</el-col>
-                      <el-col :span="19">7月21日 10:00结束</el-col>
+                      <el-col :span="19">
+                        <span class="tiemEnd">7月21日 10:00</span> 结束</el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">参与数</el-col>
-                      <el-col :span="19">11人报名</el-col>
+                      <el-col :span="10">11人报名</el-col>
+                      <el-col :span="9">
+                        <el-button size="mini" type="danger" round>正在进行</el-button>
+                      </el-col>
                     </el-row>
                   </div>
                 </div>
@@ -180,6 +186,9 @@
               </el-col>
             </el-row>
           </div>
+          <!-- 分页 -->
+          <el-pagination background layout="prev, pager, next" :total="50" :page-size="10">
+          </el-pagination>
         </div>
       </el-main>
 
@@ -212,7 +221,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .sh_header {
-  background: #f44b50;
+  background: #BB0000;
 }
 .sh_header_centent {
   width: 1200px;
@@ -220,7 +229,7 @@ export default {
 }
 .content .nav {
   background: #545c64;
-  height:36px;
+  height: 36px;
   line-height: 36px;
   overflow: hidden;
 }
@@ -267,7 +276,7 @@ export default {
 }
 .comList .grid-content .el-row .el-col {
   font-size: 14px;
-  color: #333;
+  color: #666;
   text-indent: 15px;
   height: 28px;
   line-height: 28px;
@@ -275,9 +284,23 @@ export default {
 .comList .grid-content .parameter {
   padding: 15px 0;
 }
-.el-menu-item, .el-submenu__title,.el-menu--horizontal>.el-submenu .el-submenu__title,.el-menu--horizontal>.el-menu-item,.el-submenu{
-  height:36px;
-  line-height: 36px;
+.comList .price {
+  color: #f44b50;
+  font-size: 20px;
+  font-weight: bold;
 }
-
+.comList .tiemEnd {
+  font-weight: bold;
+  color: #333;
+  font-size: 16px;
+}
+.el-pagination {
+    white-space: nowrap;
+    padding: 2px 5px;
+    color: #303133;
+    font-weight: 400;
+    display: inherit;
+    text-align: center;
+    margin:30px auto 50px
+}
 </style>

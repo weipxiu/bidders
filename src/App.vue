@@ -41,4 +41,8 @@ export default {
 *{
   margin:0;padding:0;
 }
+.el-menu-item, .el-submenu__title,.el-menu--horizontal>.el-submenu .el-submenu__title,.el-menu--horizontal>.el-menu-item,.el-submenu{
+  height:36px;
+  line-height: 36px;
+}
 </style>
