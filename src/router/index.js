@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import Login from '@/components/Login'
+import User from '@/components/User'
 
 Vue.use( Router )
 
@@ -10,18 +10,13 @@ let router = new Router( {
     linkActiveClass: 'is-active',
     routes: [ {
             path: '/',
-            name: 'Home',
-            component: Home
+            name: 'User',
+            component: User
         },
         {
             path: '/home',
             name: 'Home',
             component: Home
-        },
-        {
-            path: '/login',
-            name: 'Login',
-            component: Login
         },
         {
             path: '*',
