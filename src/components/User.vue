@@ -12,7 +12,7 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="15">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#66b1ff" text-color="#fff" active-text-color="#ffd04b">
                     <el-menu-item index="1">全部订单</el-menu-item>
                     <el-menu-item index="2">进行中</el-menu-item>
                     <el-menu-item index="3">已完成</el-menu-item>
@@ -22,7 +22,7 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#66b1ff" text-color="#fff" active-text-color="#ffd04b">
                     <el-menu-item index="1">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
@@ -49,7 +49,7 @@
                 <div class="grid-content bg-purple">2017-07-17</div>
               </el-col>
               <el-col :span="6">
-                <div class="grid-content bg-purple">订单号：123456789</div>
+                <div class="grid-content bg-purple sh_indent">订单号：123456789</div>
               </el-col>
               <el-col :span="3">
                 <div class="grid-content bg-purple">起拍价</div>
@@ -78,7 +78,7 @@
                   </div>
                 </el-col>
                 <el-col :span="6">
-                  <div class="grid-content bg-purple" style="text-indent:0">ipad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰</div>
+                  <div class="grid-content bg-purple sh_indent">ipad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰</div>
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple">3500元</div>
@@ -109,7 +109,7 @@
                   </div>
                 </el-col>
                 <el-col :span="6">
-                  <div class="grid-content bg-purple" style="text-indent:0">ipad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰</div>
+                  <div class="grid-content bg-purple sh_indent">ipad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰</div>
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple">3500元</div>
@@ -174,15 +174,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.sh_header {
-  background: #bb0000;
-}
-.sh_header_centent {
-  width: 1200px;
-  margin: 0 auto;
-}
+
 .content .nav {
-  background: #545c64;
+  background: #66b1ff;
   height: 36px;
   line-height: 36px;
   overflow: hidden;
@@ -192,17 +186,7 @@ export default {
   width: 1200px;
   margin: 0 auto;
 }
-.sh_footer {
-  width: 1200px;
-  margin: 0 auto;
-}
-.el-footer {
-  background: #3a3a3a;
-  font-size: 16px;
-  line-height: 60px;
-  color: #fff;
-  text-align: center;
-}
+
 /*全部商品列表*/
 .allList {
   width: 1200px;
@@ -234,5 +218,8 @@ export default {
 }
 .el-breadcrumb {
   margin-top: 10px;
+}
+.nav >>> .el-submenu__title i{
+  color:#fff
 }
 </style>

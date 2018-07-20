@@ -51,6 +51,13 @@ body,
 html {
   height: 100%;
 }
+.sh_indent{
+  text-indent:0!important;
+}
+.sh_center {
+  text-align: center;
+  text-indent: 0 !important;
+}
 #app {
   min-height: 100%;
   position: relative;

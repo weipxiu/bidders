@@ -8,14 +8,14 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="4">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#66b1ff" text-color="#fff" active-text-color="#ffd04b">
                     <el-menu-item index="1">正在拍卖</el-menu-item>
                   </el-menu>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#66b1ff" text-color="#fff" active-text-color="#ffd04b">
                     <el-menu-item index="1">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
@@ -67,7 +67,7 @@
                       <el-col :span="5">参与数</el-col>
                       <el-col :span="10">11人报名</el-col>
                       <el-col :span="9">
-                        <el-button size="mini" type="danger" round>正在进行</el-button>
+                        <el-button size="mini" type="primary" round>正在进行</el-button>
                       </el-col>
                     </el-row>
                   </div>
@@ -198,15 +198,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.sh_header {
-  background: #BB0000;
-}
-.sh_header_centent {
-  width: 1200px;
-  margin: 0 auto;
-}
 .content .nav {
-  background: #545c64;
+  background: #66b1ff;
   height: 36px;
   line-height: 36px;
   overflow: hidden;
@@ -215,22 +208,16 @@ export default {
   width: 1200px;
   margin: 0 auto;
 }
-.sh_footer {
-  width: 1200px;
-  margin: 0 auto;
-}
-.el-footer {
-  background: #3a3a3a;
-  font-size: 16px;
-  line-height: 60px;
-  color: #fff;
-  text-align: center;
-}
+
 /*商品列表*/
 .comList {
   width: 100%;
   margin: 20px auto;
 }
+.nav >>> .el-submenu__title i {
+  color: #fff;
+}
+
 .comImg {
   width: 100%;
   height: 178px;
@@ -263,14 +250,12 @@ export default {
   padding: 15px 0;
 }
 .comList .price {
-  color: #f44b50;
+  color: #66b1ff;
   font-size: 20px;
-  font-weight: bold;
 }
 .comList .tiemEnd {
   font-weight: bold;
   color: #333;
   font-size: 16px;
 }
-
 </style>

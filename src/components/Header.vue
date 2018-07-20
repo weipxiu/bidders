@@ -13,7 +13,7 @@
           </el-col>
           <el-col :span="4" class="sh_grid">
             <div class="grid-content bg-purple-light">
-              <img src="https://avatars3.githubusercontent.com/u/24957370?s=460&v=4" alt="" width="50" height="50" class="portrait">
+              <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532069551830&di=375af50b91c7b76063df9f51db8d2d11&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201404%2F12%2F20140412131127_42cBu.thumb.700_0.png" alt="" width="50" height="50" class="portrait">
               <el-dropdown>
                 <el-button type="primary">
                   个人中心
@@ -46,10 +46,6 @@ export default {
 </script>
 
 <style scoped>
-.sh_center {
-  text-align: center;
-  text-indent: 0 !important;
-}
 .sh_header {
   background-color: #0098e4;
 }
