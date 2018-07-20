@@ -58,17 +58,7 @@ html {
 .el-container {
   padding-bottom: 100px;
 }
-.sh_center {
-  text-align: center;
-  text-indent: 0 !important;
-}
-.sh_header {
-  background: #bb0000;
-}
-.sh_header_centent {
-  width: 1200px;
-  margin: 0 auto;
-}
+
 .content .nav {
   background: #545c64;
   height: 36px;
@@ -78,27 +68,6 @@ html {
 .content {
   width: 1200px;
   margin: 0 auto;
-}
-.sh_footer {
-  width: 100%;
-  height: 100px;
-  margin: 0 auto;
-  background: #3a3a3a url("assets/images/footerBg.png") repeat;
-  position: absolute;
-  bottom: 0;
-  padding-top:25px
-}
-.el-footer {
-  font-size: 14px;
-  line-height: 30px;
-  color: #999;
-  text-align: center;
-  width: 1200px;
-  margin: 0 auto;
-  display: table;
-}
-.el-footer p {
-  margin-top: 5px;
 }
 .el-menu-item,
 .el-submenu__title,
