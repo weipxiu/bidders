@@ -88,7 +88,8 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
-                    <el-button size="mini" type="" round  @click="open">查看竞价记录</el-button>
+                    <el-button type="text" @click="dialogTableVisible = true">查看竞价记录</el-button>
+                    <el-button size="mini" type="" round>查看竞价记录</el-button>
                   </div>
                 </el-col>
                 <el-col :span="3">
@@ -119,7 +120,7 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
-                    <el-button size="mini" type="" round  @click="open">查看竞价记录</el-button>
+                    <el-button type="text" @click="dialogTableVisible = true">查看竞价记录</el-button>
                   </div>
                 </el-col>
                 <el-col :span="3">
@@ -133,7 +134,6 @@
               </el-row>
             </div>
           </div>
-
           <!-- 分页 -->
           <el-pagination background layout="prev, pager, next" :total="50" :page-size="10">
           </el-pagination>
@@ -141,6 +141,14 @@
       </el-main>
 
     </el-container>
+
+    <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
+  <el-table :data="gridData">
+    <el-table-column property="date" label="日期" width="150"></el-table-column>
+    <el-table-column property="name" label="姓名" width="200"></el-table-column>
+    <el-table-column property="address" label="地址"></el-table-column>
+  </el-table>
+</el-dialog>
   </div>
 </template>
 
@@ -148,25 +156,47 @@
 export default {
   data() {
     return {
+      items: [
+        { message: 'Foo' },
+        { message: 'Bar' }
+      ],
       activeIndex: '1',
       activeIndex2: '1',
-      text:'我是一只修行千年的狐！千年修行千年孤独'
+      gridData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }],
+        dialogTableVisible: false,
+        dialogFormVisible: false,
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        formLabelWidth: '120px'
     }
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-    },
-    open() {
-      this.$alert(this.text, '竞价记录', {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `好像点了啥`
-          });
-        }
-      });
     }
   }
 }
@@ -174,7 +204,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .content .nav {
   background: #66b1ff;
   height: 36px;
@@ -219,7 +248,7 @@ export default {
 .el-breadcrumb {
   margin-top: 10px;
 }
-.nav >>> .el-submenu__title i{
-  color:#fff
+.nav >>> .el-submenu__title i {
+  color: #fff;
 }
 </style>
