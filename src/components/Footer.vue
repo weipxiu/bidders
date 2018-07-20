@@ -32,7 +32,8 @@ export default {
   background: #0076b0;
   position: absolute;
   bottom: 0;
-  padding-top:25px
+  padding-top:22px;
+  box-sizing: border-box;
 }
 .el-footer {
   font-size: 14px;
@@ -42,8 +43,5 @@ export default {
   width: 1200px;
   margin: 0 auto;
   display: table;
-}
-.el-footer p {
-  margin-top: 5px;
 }
 </style>

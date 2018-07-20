@@ -92,6 +92,6 @@ html {
   font-weight: 400;
   display: inherit;
   text-align: center;
-  margin: 30px auto 50px;
+  margin: 50px auto;
 }
 </style>
