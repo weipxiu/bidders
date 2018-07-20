@@ -8,7 +8,7 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="4">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#66b1ff" text-color="#fff" active-text-color="#ffd04b">
+                  <el-menu class="el-menu-demo" mode="horizontal" background-color="#66b1ff" text-color="#fff">
                     <el-menu-item index="1">正在拍卖</el-menu-item>
                   </el-menu>
                 </div>
