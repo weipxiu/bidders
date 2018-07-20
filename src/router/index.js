@@ -11,13 +11,13 @@ let router = new Router( {
     linkActiveClass: 'is-active',
     routes: [ {
             path: '/',
-            name: 'Details',
-            component: Details
-        },
-        {
-            path: '/home',
             name: 'Home',
             component: Home
+        },
+        {
+            path: '/details',
+            name: 'Details',
+            component: Details
         },
         {
             path: '/user',

@@ -88,8 +88,7 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
-                    <el-button type="text" @click="dialogTableVisible = true">查看竞价记录</el-button>
-                    <el-button size="mini" type="" round>查看竞价记录</el-button>
+                    <el-button size="mini" type="" round @click="dialogTableVisible = true">查看竞价记录</el-button>
                   </div>
                 </el-col>
                 <el-col :span="3">
@@ -120,7 +119,7 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
-                    <el-button type="text" @click="dialogTableVisible = true">查看竞价记录</el-button>
+                    <el-button size="mini" type="" round @click="dialogTableVisible = true">查看竞价记录</el-button>
                   </div>
                 </el-col>
                 <el-col :span="3">
@@ -142,13 +141,13 @@
 
     </el-container>
 
-    <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
-  <el-table :data="gridData">
-    <el-table-column property="date" label="日期" width="150"></el-table-column>
-    <el-table-column property="name" label="姓名" width="200"></el-table-column>
-    <el-table-column property="address" label="地址"></el-table-column>
-  </el-table>
-</el-dialog>
+    <el-dialog title="pad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰" :visible.sync="dialogTableVisible" width="610px" center>
+      <p class="starTime"><i class="el-icon-time"></i> 开始时间：2018年7月20日</p>
+      <el-table :data="gridData">
+        <el-table-column property="date" label="时间" width="280"></el-table-column>
+        <el-table-column property="name" label="竞价价格" width="280"></el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -163,35 +162,21 @@ export default {
       activeIndex: '1',
       activeIndex2: '1',
       gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
-        dialogTableVisible: false,
-        dialogFormVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-        formLabelWidth: '120px'
+        date: '2016-05-02',
+        name: '王小虎'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎'
+      }],
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      formLabelWidth: '120px'
     }
   },
   methods: {
@@ -251,4 +236,10 @@ export default {
 .nav >>> .el-submenu__title i {
   color: #fff;
 }
+.starTime{
+  font-size:16px;
+  text-indent:5px;
+  margin-bottom:10px
+}
+
 </style>
