@@ -47,7 +47,7 @@ export default {
 
 <style scoped>
 .sh_header {
-  background-color: #0098e4;
+  background-color: #BB0000;
 }
 .sh_header_centent {
   width: 1200px;

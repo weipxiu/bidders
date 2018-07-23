@@ -29,7 +29,7 @@ export default {
   height: 100px;
   margin: 0 auto;
   /* background: #3a3a3a url("assets/images/footerBg.png") repeat; */
-  background: #0076b0;
+  background: #555;
   position: absolute;
   bottom: 0;
   padding-top:22px;

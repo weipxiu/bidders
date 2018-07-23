@@ -69,10 +69,7 @@ html {
   text-align: center;
   text-indent: 0 !important;
 }
-.is-active,
-.el-submenu__title {
-  color: #fff !important;
-}
+
 #app {
   min-height: 100%;
   position: relative;

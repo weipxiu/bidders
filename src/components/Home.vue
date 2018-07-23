@@ -8,26 +8,24 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="4">
                 <div class="grid-content bg-purple">
-                  <el-menu class="el-menu-demo" mode="horizontal" background-color="#66b1ff" text-color="#fff">
+                  <el-menu class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D">
                     <el-menu-item index="1">正在拍卖</el-menu-item>
                   </el-menu>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#66b1ff" text-color="#fff" active-text-color="#ffd04b">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
                     <el-menu-item index="1">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
-                      <el-menu-item index="2-1">选项1</el-menu-item>
-                      <el-menu-item index="2-2">选项2</el-menu-item>
-                      <el-menu-item index="2-3">选项3</el-menu-item>
+                      <el-menu-item index="2-1" @click="LowToHight('begindate')">从小到大</el-menu-item>
+                      <el-menu-item index="2-2" @click="hightToLow('begindate')">从大到小</el-menu-item>
                     </el-submenu>
                     <el-submenu index="3">
                       <template slot="title">价格</template>
-                      <el-menu-item index="3-1">选项1</el-menu-item>
-                      <el-menu-item index="3-2">选项2</el-menu-item>
-                      <el-menu-item index="3-3">选项3</el-menu-item>
+                      <el-menu-item index="3-1" @click="LowToHight('nowprice')">从低到高</el-menu-item>
+                      <el-menu-item index="3-2" @click="hightToLow('nowprice')">从高到底</el-menu-item>
                     </el-submenu>
                     <el-submenu index="4">
                       <template slot="title">拍卖状态</template>
@@ -43,128 +41,37 @@
           <!-- 商品列表 -->
           <div class="comList">
             <el-row :gutter="20" type="" class="row-bg" justify="space-between">
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
-                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
+              <el-col :span="6" v-for="(item,index) in commoditylist" :key="index">
+                <div class="grid-content bg-purple" @click="onClickList(item.goodssn)">
+                  <img class="comImg" :src="item.imgs[0]" alt="">
+                  <p class="title">{{item.goodstitle}}</p>
                   <div class="parameter">
                     <el-row>
                       <el-col :span="5">当前价</el-col>
                       <el-col :span="19">
-                        <span class="price">450元</span>
+                        <span class="price">{{item.nowprice}}元</span>
                       </el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">起拍价</el-col>
-                      <el-col :span="19">300元</el-col>
+                      <el-col :span="19">{{item.floorprice}}元</el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">预 计</el-col>
                       <el-col :span="19">
-                        <span class="tiemEnd">7月21日 10:00</span> 结束</el-col>
+                        <span class="tiemEnd">{{item.enddate}}</span> 结束</el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">参与数</el-col>
-                      <el-col :span="10">11人报名</el-col>
+                      <el-col :span="10">{{item.number}}人报名</el-col>
                       <el-col :span="9">
-                        <el-button size="mini" type="primary" round>正在进行</el-button>
+                        <el-button size="mini" type="success" round v-if="item.goodstatus == '即将开始'">即将开始</el-button>
+                        <el-button size="mini" type="danger" round v-else-if="item.goodstatus == '正在进行'">正在进行</el-button>
+                        <el-button size="mini" type="info" round v-else-if="item.goodstatus == '已结束'">已结束</el-button>
+                        <el-button size="mini" type="warning" round v-else-if="item.goodstatus == '未开始'">未开始</el-button>
+                        <el-button size="mini" type="info" round v-else-if="item.goodstatus == '已下架'">已下架</el-button>
+                        <el-button size="mini" type="primary" round v-else>竞拍中</el-button>
                       </el-col>
-                    </el-row>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
-                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
-                  <div class="parameter">
-                    <el-row>
-                      <el-col :span="5">当前价</el-col>
-                      <el-col :span="19">450元</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">起拍价</el-col>
-                      <el-col :span="19">300元</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">预 计</el-col>
-                      <el-col :span="19">7月21日 10:00结束</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">参与数</el-col>
-                      <el-col :span="19">11人报名</el-col>
-                    </el-row>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
-                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
-                  <div class="parameter">
-                    <el-row>
-                      <el-col :span="5">当前价</el-col>
-                      <el-col :span="19">450元</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">起拍价</el-col>
-                      <el-col :span="19">300元</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">预 计</el-col>
-                      <el-col :span="19">7月21日 10:00结束</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">参与数</el-col>
-                      <el-col :span="19">11人报名</el-col>
-                    </el-row>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
-                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
-                  <div class="parameter">
-                    <el-row>
-                      <el-col :span="5">当前价</el-col>
-                      <el-col :span="19">450元</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">起拍价</el-col>
-                      <el-col :span="19">300元</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">预 计</el-col>
-                      <el-col :span="19">7月21日 10:00结束</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">参与数</el-col>
-                      <el-col :span="19">11人报名</el-col>
-                    </el-row>
-                  </div>
-                </div>
-              </el-col>
-              <el-col :span="6">
-                <div class="grid-content bg-purple">
-                  <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" alt="">
-                  <p class="title">一个用旧了的苹果mac pro笔记本就问你想要吗</p>
-                  <div class="parameter">
-                    <el-row>
-                      <el-col :span="5">当前价</el-col>
-                      <el-col :span="19">450元</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">起拍价</el-col>
-                      <el-col :span="19">300元</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">预 计</el-col>
-                      <el-col :span="19">7月21日 10:00结束</el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="5">参与数</el-col>
-                      <el-col :span="19">11人报名</el-col>
                     </el-row>
                   </div>
                 </div>
@@ -172,7 +79,7 @@
             </el-row>
           </div>
           <!-- 分页 -->
-          <el-pagination background layout="prev, pager, next" :total="50" :page-size="10">
+          <el-pagination background layout="prev, pager, next" :total="commoditylist.length" :page-size="5">
           </el-pagination>
         </div>
       </el-main>
@@ -182,22 +89,34 @@
 
 <script>
 import axios from 'axios'
+import screen from '@/assets/js'
+
 
 export default {
   data() {
     return {
+      commoditylist:[],
       activeIndex: '1',
       activeIndex2: '1'
     }
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    onClickList(id){
+      console.log(id);
+      this.$router.push({ path: '/Details', query: { goodsSn: id } })
+    },
+    LowToHight(key){
+      console.log(key)
+      this.commoditylist.sort(screen.currentPrice(key))
+    },
+    hightToLow(key){
+      console.log(key)
+      this.commoditylist.sort(screen.currentPrice(key)).reverse()
     }
   },
   created: function () {
 
-    axios.get('/api/v2/book/1220262', {
+    axios.get('/songhengstore/goods/getgoods', {
       params: {
         // id: 3884108
       }
@@ -205,7 +124,8 @@ export default {
       //   'Content-Type': 'application/x-www-form-urlencoded'
       // }
     }).then(res => {
-      console.log(res)
+      console.log(res.data.data)
+      this.commoditylist = res.data.data
     }).catch(err => {
       console.log('加载失败')
     })
@@ -216,7 +136,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .content .nav {
-  background: #66b1ff;
+  background: #EDEDED;
   height: 36px;
   line-height: 36px;
   overflow: hidden;
@@ -232,7 +152,7 @@ export default {
   margin: 20px auto;
 }
 .nav >>> .el-submenu__title i {
-  color: #fff;
+  color: #8D8D8D;
 }
 
 .comImg {
