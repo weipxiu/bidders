@@ -29,9 +29,9 @@
                     </el-submenu>
                     <el-submenu index="4">
                       <template slot="title">拍卖状态</template>
-                      <el-menu-item index="4-1">选项1</el-menu-item>
-                      <el-menu-item index="4-2">选项2</el-menu-item>
-                      <el-menu-item index="4-3">选项3</el-menu-item>
+                      <el-menu-item index="4-1" @click="auctionStatus('未开始')">未开始</el-menu-item>
+                      <el-menu-item index="4-2" @click="auctionStatus('竞拍中')">竞拍中</el-menu-item>
+                      <el-menu-item index="4-3" @click="auctionStatus('已结束')">已结束</el-menu-item>
                     </el-submenu>
                   </el-menu>
                 </div>
@@ -90,32 +90,41 @@
 <script>
 import axios from 'axios'
 import screen from '@/assets/js'
+import { Loading } from 'element-ui';
 
 
 export default {
   data() {
     return {
-      commoditylist:[],
+      commoditylist: [],
       activeIndex: '1',
       activeIndex2: '1'
     }
   },
   methods: {
-    onClickList(id){
+    onClickList(id) {
       console.log(id);
       this.$router.push({ path: '/Details', query: { goodsSn: id } })
     },
-    LowToHight(key){
+    LowToHight(key) {
       console.log(key)
       this.commoditylist.sort(screen.currentPrice(key))
     },
-    hightToLow(key){
+    hightToLow(key) {
       console.log(key)
       this.commoditylist.sort(screen.currentPrice(key)).reverse()
+    },
+    //拍卖状态筛选
+    auctionStatus(key) {
+      console.log(key)
+      this.commoditylist = this.commoditylist.filter(function (item) {
+        console.log(item)
+        return key == item.goodstatus
+      })
     }
   },
   created: function () {
-
+    Loading.service();
     axios.get('/songhengstore/goods/getgoods', {
       params: {
         // id: 3884108
@@ -126,6 +135,11 @@ export default {
     }).then(res => {
       console.log(res.data.data)
       this.commoditylist = res.data.data
+      // 关闭loading
+      let loadingInstance = Loading.service();
+      this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+        loadingInstance.close();
+      });
     }).catch(err => {
       console.log('加载失败')
     })
@@ -136,7 +150,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .content .nav {
-  background: #EDEDED;
+  background: #ededed;
   height: 36px;
   line-height: 36px;
   overflow: hidden;
@@ -152,7 +166,7 @@ export default {
   margin: 20px auto;
 }
 .nav >>> .el-submenu__title i {
-  color: #8D8D8D;
+  color: #8d8d8d;
 }
 
 .comImg {

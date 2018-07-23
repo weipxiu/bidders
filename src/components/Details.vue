@@ -14,7 +14,7 @@
             <el-row>
               <el-col :span="12">
                 <div class="title">{{goodsDetail.goodsTitle}}</div>
-                <!-- <img :src="goodsDetail.imgs[0]" width="592" height="357" alt=""> -->
+                <img :src="goodsDetail.imgs[0]" width="592" height="357" alt="" v-if="goodsDetail.imgs">
                 <div class="listImgs">
                   <img :src="item" width="106" height="72" alt="" v-for="(item,index) in goodsDetail.imgs" :key="index">
                 </div>
@@ -38,7 +38,7 @@
                   <el-col :span="3">加价：</el-col>
                   <el-col :span="21">
                     <el-radio-group v-model="radio1" size="small">
-                      <el-radio-button label="item" v-for="(item,index) in goodsDetail.addMoney" :key="index">{{item+'元'}}</el-radio-button>
+                      <el-radio-button :label="item" v-for="(item,index) in goodsDetail.addMoney" :key="index">{{item+'元'}}</el-radio-button>
                     </el-radio-group>
                   </el-col>
                 </el-row>
@@ -68,7 +68,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      radio1: '100元',
+      radio1: '100',
       goodsDetail: [],
       CountDown: 0
     }
