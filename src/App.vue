@@ -39,14 +39,15 @@ export default {
     Footer,
   },
   created: function () {
-    if (window.console && window.console.log) {
-      setTimeout(function () {
-        console.log("\n %c 嵩恒网络科技有限公司拍卖系统 %c  © Jun Li  如有Bug - QQ：343049466 \n",
-          "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;",
-          "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;"
-        );
-      }, 1500);
-    }
+
+    // if (window.console && window.console.log) {
+    //   setTimeout(function () {
+    //     console.log("\n %c 嵩恒网络科技有限公司拍卖系统 %c  © Jun Li  如有Bug - QQ：343049466 \n",
+    //       "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;",
+    //       "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;"
+    //     );
+    //   }, 1500);
+    // }
   }
 }
 </script>
@@ -68,8 +69,9 @@ html {
   text-align: center;
   text-indent: 0 !important;
 }
-.is-active,.el-submenu__title{
-  color:#fff!important;
+.is-active,
+.el-submenu__title {
+  color: #fff !important;
 }
 #app {
   min-height: 100%;

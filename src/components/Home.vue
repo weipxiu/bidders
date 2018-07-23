@@ -181,6 +181,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -192,6 +194,20 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     }
+  },
+  created: function () {
+
+    axios.get('https://wxnewscode.dftoutiao.com/weixinQRcode/newsInfoForApplets', {
+      params: {
+        url: 180523162524575,
+        qid: 'xiaochengxu_dftt',
+        hasQRcode: 0
+      }
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log('加载失败')
+    })
   }
 }
 </script>

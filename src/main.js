@@ -4,9 +4,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App.vue';
 import router from '@/router'
 
+import Axios from 'axios'
+import VueAxios from 'vue-axios'
+
 Vue.config.productionTip = false
 
-Vue.use(ElementUI);
+Vue.use(ElementUI,VueAxios,Axios);
 
 new Vue({
   el: '#app',
