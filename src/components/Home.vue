@@ -197,12 +197,13 @@ export default {
   },
   created: function () {
 
-    axios.get('https://wxnewscode.dftoutiao.com/weixinQRcode/newsInfoForApplets', {
+    axios.get('/api/v2/book/1220262', {
       params: {
-        url: 180523162524575,
-        qid: 'xiaochengxu_dftt',
-        hasQRcode: 0
+        // id: 3884108
       }
+      // headers: {
+      //   'Content-Type': 'application/x-www-form-urlencoded'
+      // }
     }).then(res => {
       console.log(res)
     }).catch(err => {
