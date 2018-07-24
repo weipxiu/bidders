@@ -26,13 +26,13 @@
                     <el-menu-item index="1">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
-                      <el-menu-item index="2-1">从低到高</el-menu-item>
-                      <el-menu-item index="2-2">从高到低</el-menu-item>
+                      <el-menu-item index="2-1" @click="initListData({sortTime:'asc'})">从低到高</el-menu-item>
+                      <el-menu-item index="2-2" @click="initListData({sortTime:'desc'})">从高到低</el-menu-item>
                     </el-submenu>
                     <el-submenu index="3">
                       <template slot="title">价格</template>
-                      <el-menu-item index="3-1">从低到高</el-menu-item>
-                      <el-menu-item index="3-2">从高到低</el-menu-item>
+                      <el-menu-item index="3-1"  @click="initListData({sortPrice:'asc'})">从低到高</el-menu-item>
+                      <el-menu-item index="3-2"  @click="initListData({sortPrice:'desc'})">从高到低</el-menu-item>
                     </el-submenu>
                   </el-menu>
                 </div>
@@ -68,7 +68,7 @@
               </el-col>
             </el-row>
 
-            <div v-for="(item,index) in userDataList" :key="index">
+            <div v-for="(item,index) in userDataList" :key="index" v-if="userDataList.length">
               <el-row class="el_row_body">
                 <el-col :span="3">
                   <div class="grid-content bg-purple">
@@ -86,7 +86,7 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
-                    <el-button size="mini" type="" round @click="dialogTableVisible = true">查看竞价记录</el-button>
+                    <el-button size="mini" type="" round @click="dialogTableVisible = true; seeRecord(item.goodsSn)">查看竞价记录</el-button>
                   </div>
                 </el-col>
                 <el-col :span="3">
@@ -114,8 +114,8 @@
       <p class="starTime">
         <i class="el-icon-time"></i> 开始时间：2018年7月20日</p>
       <el-table :data="gridData">
-        <el-table-column property="date" label="时间" width="280"></el-table-column>
-        <el-table-column property="name" label="竞价价格" width="280"></el-table-column>
+        <el-table-column property="createTime" label="时间" width="280"></el-table-column>
+        <el-table-column property="goodsMoney" label="竞价价格" width="280"></el-table-column>
       </el-table>
     </el-dialog>
 
@@ -130,26 +130,14 @@ import Config from '@/config'
 export default {
   data() {
     return {
-      userDataList:[], //数据列表
+      userDataList: [], //数据列表
       items: [
         { message: 'Foo' },
         { message: 'Bar' }
       ],
       activeIndex: '1',
       activeIndex2: '1',
-      gridData: [{
-        date: '2016-05-02',
-        name: '王小虎'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎'
-      }],
+      gridData: [],
       dialogTableVisible: false,
       dialogFormVisible: false,
       formLabelWidth: '120px'
@@ -163,17 +151,43 @@ export default {
     initListData(data) {
       axios.get(Config.userDataList, {
         params: {
-
+          sortPrice: data?data.sortPrice : '',
+          sortTime: data?data.sortTime : ''
         }
       }).then(res => {
         console.log(res.data.data)
+        // 判断是否有权限
+        if (res.data == 'No permissions') {
+          this.$router.push({ path: '/login' });
+          return
+        }
+
         this.userDataList = res.data.data
       }).catch(err => {
-        
+
+      })
+    },
+    // 当前商品所有竞价记录
+    seeRecord(id){
+      axios.get(Config.userDataList, {
+        params: {
+          goodsSn: id
+        }
+      }).then(res => {
+        console.log('当前商品竞价记录',res.data)
+        // 判断是否有权限
+        if (res.data == 'No permissions') {
+          this.$router.push({ path: '/login' });
+          return
+        }
+
+        this.gridData = res.data.data
+      }).catch(err => {
+
       })
     }
   },
-  created:function(){
+  created: function () {
     this.initListData()
   }
 }

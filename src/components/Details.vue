@@ -44,10 +44,7 @@
                   <el-col :span="3">加价：</el-col>
                   <el-col :span="21">
                     <el-radio-group v-model="radioData" size="small">
-                      <el-radio-button 
-                      :label="item" v-for="(item,index) in goodsDetail.addMoney" 
-                      :key="index" 
-                      :disabled="goodsDetail.status != '1'">{{item+'元'}}</el-radio-button>
+                      <el-radio-button :label="item" v-for="(item,index) in goodsDetail.addMoney" :key="index" :disabled="goodsDetail.status != '1'">{{item+'元'}}</el-radio-button>
                     </el-radio-group>
                   </el-col>
                 </el-row>
@@ -74,7 +71,9 @@
     <el-dialog type='warning' :showClose="false" title="注意！由于参与竞拍人数过多，当前价格可能与页面显示价格不符！" :visible="dialogTableVisible" width="350px" center>
       <div class="pricePopup">
         <p>当前价格：{{goodsDetail.nowPrice}}元</p>
-        <p>竞价价格：<span>{{Number(goodsDetail.nowPrice) + Number(radioData)}}元</span></p>
+        <p>竞价价格：
+          <span>{{Number(goodsDetail.nowPrice) + Number(radioData)}}元</span>
+        </p>
       </div>
       <el-button type="info" round size="small" class="btn_close" @click="dialogTableVisible = false">取消</el-button>
       <el-button type="primary" round size="small" class="btn_success" v-if="goodsDetail.status == '1'" @click="starBidPrice(goodsDetail.nowPrice)">参与竞价</el-button>
@@ -125,6 +124,12 @@ export default {
         }
       }).then(res => {
         console.log(res.data.message)
+        // 判断是否有权限
+        if (res.data == 'No permissions') {
+          this.$router.push({ path: '/login' });
+          return
+        }
+
         this.dialogTableVisible = false; //关闭弹窗
         this.detaliData();
       }).catch(err => {

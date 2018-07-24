@@ -53,7 +53,7 @@ export default {
           params: {}
         }).then(res => {
           console.log(res)
-          this.$router.push({ path: '/login', query: { goodsSn: '2' } })
+          this.$router.push({ path: '/login' })
         }).catch(err => {
 
         })

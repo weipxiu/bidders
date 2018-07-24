@@ -120,13 +120,19 @@ export default {
           //   'Content-Type': 'application/x-www-form-urlencoded'
           // }
         }).then(res => {
+          // 判断是否有权限
+          if(res.data == 'No permissions'){
+            this.$router.push({ path: '/login' });
+            return
+          }
+
           // 关闭loading
           let loadingInstance = Loading.service();
           // 以服务的方式调用的 Loading 需要异步关闭
           this.$nextTick(() => {
             loadingInstance.close();
           });
-          console.log(res.data.data)
+          console.log(res.data)
 
           this.commoditylist = res.data.data
           for (var i = 0; i < res.data.data.length; i++) {

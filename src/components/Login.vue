@@ -19,6 +19,7 @@
 import axios from 'axios'
 import screen from '@/assets/js'
 import Config from '@/config'
+import { Loading } from 'element-ui';
 
 export default {
   data() {
@@ -30,7 +31,12 @@ export default {
 
   },
   created: function () {
-
+    // 关闭loading
+    let loadingInstance = Loading.service();
+    // 以服务的方式调用的 Loading 需要异步关闭
+    this.$nextTick(() => {
+      loadingInstance.close();
+    });
   }
 }
 </script>
@@ -39,14 +45,22 @@ export default {
 <style scoped>
 .centent_body {
   width: 1200px;
+  min-height:500px;
   margin: 0 auto;
+  position: relative;
 }
-.login{
+.login {
   text-align: center;
-  width:150px;
-  margin:200px auto 0;
+  width: 150px;
+  height:150px;
+  position: absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  margin:auto
 }
-.login p{
-  margin:10px auto;
+.login p {
+  margin: 10px auto;
 }
 </style>
