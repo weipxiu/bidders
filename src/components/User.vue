@@ -12,7 +12,7 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="15">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
                     <el-menu-item index="1">全部订单</el-menu-item>
                     <el-menu-item index="2">进行中</el-menu-item>
                     <el-menu-item index="3">已完成</el-menu-item>
@@ -22,19 +22,17 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
                     <el-menu-item index="1">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
-                      <el-menu-item index="2-1">选项1</el-menu-item>
-                      <el-menu-item index="2-2">选项2</el-menu-item>
-                      <el-menu-item index="2-3">选项3</el-menu-item>
+                      <el-menu-item index="2-1">从低到高</el-menu-item>
+                      <el-menu-item index="2-2">从高到低</el-menu-item>
                     </el-submenu>
                     <el-submenu index="3">
                       <template slot="title">价格</template>
-                      <el-menu-item index="3-1">选项1</el-menu-item>
-                      <el-menu-item index="3-2">选项2</el-menu-item>
-                      <el-menu-item index="3-3">选项3</el-menu-item>
+                      <el-menu-item index="3-1">从低到高</el-menu-item>
+                      <el-menu-item index="3-2">从高到低</el-menu-item>
                     </el-submenu>
                   </el-menu>
                 </div>

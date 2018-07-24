@@ -73,9 +73,9 @@
                       <el-col :span="9">
                         <el-button size="mini" type="success" round v-if="item.goodstatus == '即将开始'">即将开始</el-button>
                         <el-button size="mini" type="danger" round v-else-if="item.goodstatus == '正在进行'">正在进行</el-button>
-                        <el-button size="mini" type="info" round v-else-if="item.goodstatus == '已结束'">已结束</el-button>
+                        <el-button size="mini" type="info" round v-else-if="item.goodstatus == '已结束'" disabled>已结束</el-button>
                         <el-button size="mini" type="warning" round v-else-if="item.goodstatus == '未开始'">未开始</el-button>
-                        <el-button size="mini" type="info" round v-else-if="item.goodstatus == '已下架'">已下架</el-button>
+                        <el-button size="mini" type="info" round v-else-if="item.goodstatus == '已下架'" disabled>已下架</el-button>
                         <el-button size="mini" type="primary" round v-else>竞拍中</el-button>
                       </el-col>
                     </el-row>

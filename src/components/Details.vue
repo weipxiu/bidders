@@ -44,7 +44,10 @@
                   <el-col :span="3">加价：</el-col>
                   <el-col :span="21">
                     <el-radio-group v-model="radioData" size="small">
-                      <el-radio-button :label="item" v-for="(item,index) in goodsDetail.addMoney" :key="index">{{item+'元'}}</el-radio-button>
+                      <el-radio-button 
+                      :label="item" v-for="(item,index) in goodsDetail.addMoney" 
+                      :key="index" 
+                      :disabled="goodsDetail.status != '1'">{{item+'元'}}</el-radio-button>
                     </el-radio-group>
                   </el-col>
                 </el-row>
