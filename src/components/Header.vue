@@ -20,8 +20,8 @@
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown" class="personal">
-                  <el-dropdown-item  command="1">个人中心</el-dropdown-item>
-                  <el-dropdown-item  command="2">退出登录</el-dropdown-item>
+                  <el-dropdown-item command="1">个人中心</el-dropdown-item>
+                  <el-dropdown-item command="2">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -33,6 +33,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+import screen from '@/assets/js'
+import Config from '@/config'
+
 export default {
   data() {
     return {
@@ -40,12 +44,20 @@ export default {
     }
   },
   methods: {
-    handleCommand(command){
-       if(command == '1'){
-         this.$router.push({ path: '/user', query: { goodsSn: '1' } })
-       }else if(command == '2'){
-        this.$router.push({ path: '/login', query: { goodsSn: '2' } })
-       }
+    handleCommand(command) {
+      if (command == '1') {
+        this.$router.push({ path: '/user', query: { goodsSn: '1' } })
+      } else if (command == '2') {
+        //退出登录
+        axios.get(Config.userExit, {
+          params: {}
+        }).then(res => {
+          console.log(res)
+          this.$router.push({ path: '/login', query: { goodsSn: '2' } })
+        }).catch(err => {
+
+        })
+      }
     }
   }
 }
@@ -53,7 +65,7 @@ export default {
 
 <style scoped>
 .sh_header {
-  background-color: #BB0000;
+  background-color: #bb0000;
 }
 .sh_header_centent {
   width: 1200px;
@@ -79,17 +91,17 @@ export default {
   display: inline-block;
   margin-top: 4px;
 }
-.el-dropdown{
+.el-dropdown {
   vertical-align: top;
   display: inline-block;
-  margin:10px 0 0 15px;
+  margin: 10px 0 0 15px;
 }
-.el-button--primary{
+.el-button--primary {
   background: transparent;
-  border:none;
-  padding:12px 0
+  border: none;
+  padding: 12px 0;
 }
-.sh_grid .grid-content{
-  text-align: right
+.sh_grid .grid-content {
+  text-align: right;
 }
 </style>

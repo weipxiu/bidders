@@ -91,9 +91,9 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
-                    <el-button size="mini" type="info" round v-if="item.goods.status == 0">已下架</el-button>
-                    <el-button size="mini" type="primary" round v-else-if="item.goods.status == 1">进行中</el-button>
-                    <el-button size="mini" type="warning" round v-else>即将开始</el-button>
+                    <el-button size="mini" type="info" round v-if="item.orderStatus == 0">竞拍失败</el-button>
+                    <el-button size="mini" type="success" round v-else-if="item.orderStatus == 1">交易成交</el-button>
+                    <el-button size="mini" type="primary" round v-else>已发货</el-button>
                   </div>
                 </el-col>
                 <el-col :span="1">
