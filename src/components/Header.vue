@@ -14,14 +14,13 @@
           <el-col :span="4" class="sh_grid">
             <div class="grid-content bg-purple-light">
               <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532069551830&di=375af50b91c7b76063df9f51db8d2d11&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201404%2F12%2F20140412131127_42cBu.thumb.700_0.png" alt="" width="50" height="50" class="portrait">
-              <el-dropdown>
+              <el-dropdown @command="handleCommand">
                 <el-button type="primary">
                   个人中心
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown" class="personal">
-                  <el-dropdown-item>个人中心</el-dropdown-item>
-                  <el-dropdown-item>个人中心</el-dropdown-item>
+                  <el-dropdown-item  command="1">个人中心</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -40,7 +39,11 @@ export default {
     }
   },
   methods: {
-
+    handleCommand(command){
+       if(command == '1'){
+         this.$router.push({ path: '/user', query: { goodsSn: '00' } })
+       }
+    }
   }
 }
 </script>

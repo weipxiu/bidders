@@ -12,7 +12,7 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="15">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#66b1ff" text-color="#fff" active-text-color="#ffd04b">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
                     <el-menu-item index="1">全部订单</el-menu-item>
                     <el-menu-item index="2">进行中</el-menu-item>
                     <el-menu-item index="3">已完成</el-menu-item>
@@ -22,7 +22,7 @@
               </el-col>
               <el-col :span="6">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#66b1ff" text-color="#fff" active-text-color="#ffd04b">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
                     <el-menu-item index="1">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
@@ -70,7 +70,7 @@
               </el-col>
             </el-row>
 
-            <div>
+            <div v-for="(item,index) in userDataList" :key="index">
               <el-row class="el_row_body">
                 <el-col :span="3">
                   <div class="grid-content bg-purple">
@@ -78,13 +78,13 @@
                   </div>
                 </el-col>
                 <el-col :span="6">
-                  <div class="grid-content bg-purple sh_indent">ipad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰</div>
+                  <div class="grid-content bg-purple sh_indent">{{item.goods.goodsTitle}}</div>
                 </el-col>
                 <el-col :span="3">
-                  <div class="grid-content bg-purple">3500元</div>
+                  <div class="grid-content bg-purple">{{item.goods.floorPrice}}元</div>
                 </el-col>
                 <el-col :span="5">
-                  <div class="grid-content bg-purple">4500元</div>
+                  <div class="grid-content bg-purple">{{item.goods.nowPrice}}元</div>
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
@@ -93,38 +93,9 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
-                    <el-button size="mini" type="primary" round>进行中</el-button>
-                  </div>
-                </el-col>
-                <el-col :span="1">
-                  <div class="grid-content bg-purple"></div>
-                </el-col>
-              </el-row>
-            </div>
-            <div>
-              <el-row class="el_row_body">
-                <el-col :span="3">
-                  <div class="grid-content bg-purple">
-                    <img class="comImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531980189049&di=cd8f4dcc268877599adbf3cb7d8caa08&imgtype=0&src=http%3A%2F%2Fcdn1.expertreviews.co.uk%2Fsites%2Fexpertreviews%2Ffiles%2F3%2F00%2Fmacbook_pro_13_a_1143_0_0.jpg" width="68" height="68" alt="">
-                  </div>
-                </el-col>
-                <el-col :span="6">
-                  <div class="grid-content bg-purple sh_indent">ipad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰</div>
-                </el-col>
-                <el-col :span="3">
-                  <div class="grid-content bg-purple">3500元</div>
-                </el-col>
-                <el-col :span="5">
-                  <div class="grid-content bg-purple">4500元</div>
-                </el-col>
-                <el-col :span="3">
-                  <div class="grid-content bg-purple sh_center">
-                    <el-button size="mini" type="" round @click="dialogTableVisible = true">查看竞价记录</el-button>
-                  </div>
-                </el-col>
-                <el-col :span="3">
-                  <div class="grid-content bg-purple sh_center">
-                    <el-button size="mini" type="primary" round>进行中</el-button>
+                    <el-button size="mini" type="info" round v-if="item.goods.status == 0">已下架</el-button>
+                    <el-button size="mini" type="primary" round v-else-if="item.goods.status == 1">进行中</el-button>
+                    <el-button size="mini" type="warning" round v-else>即将开始</el-button>
                   </div>
                 </el-col>
                 <el-col :span="1">
@@ -134,7 +105,7 @@
             </div>
           </div>
           <!-- 分页 -->
-          <el-pagination background layout="prev, pager, next" :total="50" :page-size="10">
+          <el-pagination background layout="prev, pager, next" :total="50" :page-size="50">
           </el-pagination>
         </div>
       </el-main>
@@ -142,19 +113,26 @@
     </el-container>
 
     <el-dialog title="pad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰" :visible.sync="dialogTableVisible" width="610px" center>
-      <p class="starTime"><i class="el-icon-time"></i> 开始时间：2018年7月20日</p>
+      <p class="starTime">
+        <i class="el-icon-time"></i> 开始时间：2018年7月20日</p>
       <el-table :data="gridData">
         <el-table-column property="date" label="时间" width="280"></el-table-column>
         <el-table-column property="name" label="竞价价格" width="280"></el-table-column>
       </el-table>
     </el-dialog>
+
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import screen from '@/assets/js'
+import Config from '@/config'
+
 export default {
   data() {
     return {
+      userDataList:[], //数据列表
       items: [
         { message: 'Foo' },
         { message: 'Bar' }
@@ -182,7 +160,23 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    //拿到数据列表
+    initListData(data) {
+      axios.get(Config.userDataList, {
+        params: {
+
+        }
+      }).then(res => {
+        console.log(res.data.data)
+        this.userDataList = res.data.data
+      }).catch(err => {
+        
+      })
     }
+  },
+  created:function(){
+    this.initListData()
   }
 }
 </script>
@@ -190,7 +184,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .content .nav {
-  background: #66b1ff;
+  background: #ededed;
   height: 36px;
   line-height: 36px;
   overflow: hidden;
@@ -199,6 +193,9 @@ export default {
 .content {
   width: 1200px;
   margin: 0 auto;
+}
+.nav >>> .el-submenu__title i {
+  color: #8d8d8d;
 }
 
 /*全部商品列表*/
@@ -233,13 +230,10 @@ export default {
 .el-breadcrumb {
   margin-top: 10px;
 }
-.nav >>> .el-submenu__title i {
-  color: #fff;
-}
-.starTime{
-  font-size:16px;
-  text-indent:5px;
-  margin-bottom:10px
-}
 
+.starTime {
+  font-size: 16px;
+  text-indent: 5px;
+  margin-bottom: 10px;
+}
 </style>

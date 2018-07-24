@@ -69,7 +69,9 @@ html {
   text-align: center;
   text-indent: 0 !important;
 }
-
+.el-button--mini, .el-button--mini.is-round{
+  padding:5px 15px;
+}
 #app {
   min-height: 100%;
   position: relative;

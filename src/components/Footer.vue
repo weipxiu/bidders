@@ -1,5 +1,5 @@
 <template>
-  <div class="sh_footer">
+  <div class="sh_footer" v-if="true">
     <!-- 底部 -->
     <el-footer>
       <div class="">
@@ -29,7 +29,7 @@ export default {
   height: 100px;
   margin: 0 auto;
   /* background: #3a3a3a url("assets/images/footerBg.png") repeat; */
-  background: #555;
+  background: #2e2e2e;
   position: absolute;
   bottom: 0;
   padding-top:22px;

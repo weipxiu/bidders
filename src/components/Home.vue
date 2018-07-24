@@ -8,15 +8,15 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="4">
                 <div class="grid-content bg-purple">
-                  <el-menu class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D">
-                    <el-menu-item index="1">正在拍卖</el-menu-item>
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
+                    <el-menu-item index="1" @click="handleSelect">正在拍卖</el-menu-item>
                   </el-menu>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content bg-purple">
                   <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
-                    <el-menu-item index="1">综合排序</el-menu-item>
+                    <el-menu-item index="1" @click="handleSelect">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
                       <el-menu-item index="2-1" @click="LowToHight('begindate')">从小到大</el-menu-item>
@@ -56,10 +56,15 @@
                       <el-col :span="5">起拍价</el-col>
                       <el-col :span="19">{{item.floorprice}}元</el-col>
                     </el-row>
-                    <el-row>
+                    <el-row v-if="item.enddate != 0">
                       <el-col :span="5">预 计</el-col>
                       <el-col :span="19">
                         <span class="tiemEnd">{{item.enddate}}</span> 结束</el-col>
+                    </el-row>
+                    <el-row v-else>
+                      <el-col :span="5">预 计</el-col>
+                      <el-col :span="19">
+                        <span class="tiemEnd">当前竞拍已经结束</span></el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">参与数</el-col>
@@ -79,7 +84,7 @@
             </el-row>
           </div>
           <!-- 分页 -->
-          <el-pagination background layout="prev, pager, next" :total="commoditylist.length" :page-size="5">
+          <el-pagination background layout="prev, pager, next" :total="commoditylist.length" :page-size="50">
           </el-pagination>
         </div>
       </el-main>
@@ -90,6 +95,7 @@
 <script>
 import axios from 'axios'
 import screen from '@/assets/js'
+import Config from '@/config'
 import { Loading } from 'element-ui';
 
 
@@ -102,47 +108,82 @@ export default {
     }
   },
   methods: {
+    inliListData() {
+      return new Promise((resolve, reject) => {
+        Loading.service();
+        axios.get(Config.getgoodsList, {
+          params: {
+            // id: 3884108
+          }
+          // headers: {
+          //   'Content-Type': 'application/x-www-form-urlencoded'
+          // }
+        }).then(res => {
+          // 关闭loading
+          let loadingInstance = Loading.service();
+          // 以服务的方式调用的 Loading 需要异步关闭
+          this.$nextTick(() => {
+            loadingInstance.close();
+          });
+          console.log(res.data.data)
+
+          this.commoditylist = res.data.data
+          for (var i = 0; i < res.data.data.length; i++) {
+            // 倒计时
+            var countDown =  this.commoditylist[i].enddate - Date.parse(new Date());
+            var s = countDown / 1000;   //需要转的秒数
+            if (countDown > 0) {
+              var m;
+              this.commoditylist[i].enddate = secondToDate(s)
+              // 输出03天05分59秒  时分秒
+              function secondToDate(result) {
+                var h = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600);
+                var m = Math.floor((result / 60 % 60)) < 10 ? '0' + Math.floor((result / 60 % 60)) : Math.floor((result / 60 % 60));
+                var s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60));
+                return result = h + "时" + m + "分" + s + "秒"
+              }
+            }else{
+              this.commoditylist[i].enddate = '0'
+            }
+          }
+
+          resolve(res.data.data)
+        }).catch(err => {
+          console.log('加载失败')
+        })
+      })
+    },
+    //正在拍卖/综合排序
+    handleSelect() {
+      this.inliListData()
+    },
     onClickList(id) {
-      console.log(id);
-      this.$router.push({ path: '/Details', query: { goodsSn: id } })
+      this.inliListData().then(() => {
+        this.$router.push({ path: '/Details', query: { goodsSn: id } })
+      })
     },
     LowToHight(key) {
-      console.log(key)
-      this.commoditylist.sort(screen.currentPrice(key))
+      this.inliListData().then(() => {
+        this.commoditylist.sort(screen.currentPrice(key))
+      })
     },
     hightToLow(key) {
-      console.log(key)
-      this.commoditylist.sort(screen.currentPrice(key)).reverse()
+      this.inliListData().then(() => {
+        this.commoditylist.sort(screen.currentPrice(key)).reverse()
+      })
     },
     //拍卖状态筛选
     auctionStatus(key) {
-      console.log(key)
-      this.commoditylist = this.commoditylist.filter(function (item) {
-        console.log(item)
-        return key == item.goodstatus
+      this.inliListData().then(() => {
+        this.commoditylist = this.commoditylist.filter(function (item) {
+          return key == item.goodstatus
+        })
       })
     }
   },
   created: function () {
-    Loading.service();
-    axios.get('/songhengstore/goods/getgoods', {
-      params: {
-        // id: 3884108
-      }
-      // headers: {
-      //   'Content-Type': 'application/x-www-form-urlencoded'
-      // }
-    }).then(res => {
-      console.log(res.data.data)
-      this.commoditylist = res.data.data
-      // 关闭loading
-      let loadingInstance = Loading.service();
-      this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
-        loadingInstance.close();
-      });
-    }).catch(err => {
-      console.log('加载失败')
-    })
+    //初始化请求数据
+    this.inliListData()
   }
 }
 </script>
@@ -186,9 +227,8 @@ export default {
 }
 .comList .grid-content {
   border: 1px solid #eee;
-}
-.comList .grid-content {
   margin-bottom: 20px;
+  cursor: pointer;
 }
 .comList .grid-content .el-row .el-col {
   font-size: 14px;
@@ -202,11 +242,11 @@ export default {
 }
 .comList .price {
   color: #66b1ff;
-  font-size: 20px;
+  font-size: 18px;
 }
 .comList .tiemEnd {
   font-weight: bold;
   color: #333;
-  font-size: 16px;
+  font-size: 15px;
 }
 </style>
