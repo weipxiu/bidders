@@ -5,7 +5,7 @@
         <el-row type="flex" justify="space-between" class="row-bg">
           <el-col :span="10">
             <div class="grid-content bg-purple">
-              <a href="">
+              <a href="./home">
                 <img src="@/assets/images/logo.png" width="166" height="40" alt="" class="logo">
                 <img src="@/assets/images/logo_1.png" width="72" height="54" alt="" class="logo_1">
               </a>
@@ -21,6 +21,7 @@
                 </el-button>
                 <el-dropdown-menu slot="dropdown" class="personal">
                   <el-dropdown-item  command="1">个人中心</el-dropdown-item>
+                  <el-dropdown-item  command="2">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </div>
@@ -41,7 +42,9 @@ export default {
   methods: {
     handleCommand(command){
        if(command == '1'){
-         this.$router.push({ path: '/user', query: { goodsSn: '00' } })
+         this.$router.push({ path: '/user', query: { goodsSn: '1' } })
+       }else if(command == '2'){
+        this.$router.push({ path: '/login', query: { goodsSn: '2' } })
        }
     }
   }

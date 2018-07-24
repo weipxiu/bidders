@@ -8,14 +8,14 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="4">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
                     <el-menu-item index="1" @click="handleSelect">正在拍卖</el-menu-item>
                   </el-menu>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#777">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
                     <el-menu-item index="1" @click="handleSelect">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
@@ -40,6 +40,7 @@
           </div>
           <!-- 商品列表 -->
           <div class="comList">
+            <p v-if="!commoditylist.length">很遗憾，当前条件下没有任何商品！</p>
             <el-row :gutter="20" type="" class="row-bg" justify="space-between">
               <el-col :span="6" v-for="(item,index) in commoditylist" :key="index">
                 <div class="grid-content bg-purple" @click="onClickList(item.goodssn)">
@@ -84,7 +85,7 @@
             </el-row>
           </div>
           <!-- 分页 -->
-          <el-pagination background layout="prev, pager, next" :total="commoditylist.length" :page-size="50">
+          <el-pagination background layout="prev, pager, next" :total="commoditylist.length" :page-size="50" v-if="commoditylist.length">
           </el-pagination>
         </div>
       </el-main>

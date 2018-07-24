@@ -1,18 +1,6 @@
 <template>
   <div id="app">
     <Header></Header>
-    <!-- <ul class="nav">
-      <li>
-        <el-row>
-          <router-link to='/' tag="el-button" type="button" class="el-button--primary" exact event='click'>Home</router-link>
-        </el-row>
-      </li>
-      <li>
-        <el-row>
-          <router-link to='/login' tag="el-button" type="button" class="el-button--primary" event='click'>Login</router-link>
-        </el-row>
-      </li>
-    </ul> -->
     <!-- <el-row>
       <el-button>默认按钮</el-button>
       
@@ -39,14 +27,13 @@ export default {
     Footer,
   },
   created: function () {
-
     // if (window.console && window.console.log) {
     //   setTimeout(function () {
     //     console.log("\n %c 嵩恒网络科技有限公司拍卖系统 %c  © Jun Li  如有Bug - QQ：343049466 \n",
     //       "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;",
     //       "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;"
     //     );
-    //   }, 1500);
+    //   }, 2000);
     // }
   }
 }
