@@ -6,8 +6,8 @@
           <el-col :span="10">
             <div class="grid-content bg-purple">
               <a href="./home">
-                <img src="@/assets/images/logo.svg" width="316" height="65" alt="" class="logo">
-                <!-- <img src="@/assets/images/logo_1.png" width="72" height="54" alt="" class="logo_1"> -->
+                <img src="@/assets/images/logo.svg" width="48" height="40" alt="" class="logo">
+                <img src="@/assets/images/logo_1.png" width="199" height="51" alt="" class="logo_1">
               </a>
             </div>
           </el-col>
@@ -40,7 +40,6 @@ import Config from '@/config'
 export default {
   data() {
     return {
-
     }
   },
   methods: {
@@ -52,10 +51,9 @@ export default {
         axios.get(Config.userExit, {
           params: {}
         }).then(res => {
-          console.log('退出登录',res)
-          //this.$router.push({ path: '/login' });
-        }).catch(err => {
-
+          if(res.status == 200){
+            //this.$router.push({ path: '/login' });
+          }
         })
       }
     }
@@ -77,13 +75,11 @@ export default {
   height: 100%;
 }
 .logo {
-  vertical-align: baseline;
-  margin-top: -5px;
-  display: inline-block;
+  margin-top: 10px;
+  float: left;
 }
 .logo_1 {
-  vertical-align: bottom;
-  margin-top: 5px;
+  margin: 8px 0 0 7px;
   display: inline-block;
 }
 .portrait {

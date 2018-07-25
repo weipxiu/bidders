@@ -10,16 +10,6 @@
           </el-breadcrumb>
           <div class="nav">
             <el-row type="flex" justify="space-between" class="row-bg">
-              <!-- <el-col :span="15">
-                <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
-                    <el-menu-item index="1" @click="initListData">全部订单</el-menu-item>
-                    <el-menu-item index="2" @click="personalStatus(2)">已发货</el-menu-item>
-                    <el-menu-item index="3" @click="personalStatus(1)">已完成</el-menu-item>
-                    <el-menu-item index="4" @click="personalStatus(0)">竞价失败</el-menu-item>
-                  </el-menu>
-                </div>
-              </el-col> -->
               <el-col :span="24">
                 <div class="grid-content bg-purple">
                   <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
@@ -27,7 +17,7 @@
                     <el-menu-item index="20" @click="personalStatus(2)">已发货</el-menu-item>
                     <el-menu-item index="30" @click="personalStatus(1)">已完成</el-menu-item>
                     <el-menu-item index="40" @click="personalStatus(0)">竞价失败</el-menu-item>
-                    <li style="width:570px;float: left;height: 36px;line-height: 36px;"></li>
+                    <li style="width:570px;float: left;height: 36px;line-height: 36px;outline: none;"></li>
                     <el-menu-item index="10" @click="initListData">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
@@ -46,13 +36,13 @@
           </div>
 
           <!-- 全部订单列表 -->
-          <div class="allList">
+          <div class="allList" v-for="(item,index) in userDataList" :key="index" v-if="userDataList.length">
             <el-row class="el_row_header">
               <el-col :span="4">
-                <div class="grid-content bg-purple">2017-07-17</div>
+                <div class="grid-content bg-purple">{{item.createTime}}</div>
               </el-col>
               <el-col :span="4">
-                <div class="grid-content bg-purple sh_indent">订单号：123456789</div>
+                <div class="grid-content bg-purple sh_indent">订单号：{{item.orderNo}}</div>
               </el-col>
               <el-col :span="3">
                 <div class="grid-content bg-purple">起拍价</div>
@@ -60,20 +50,20 @@
               <el-col :span="3">
                 <div class="grid-content bg-purple">竞价价格</div>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="7">
                 <div class="grid-content bg-purple sh_center">记录</div>
               </el-col>
               <el-col :span="3">
                 <div class="grid-content bg-purple sh_center">订单状态</div>
               </el-col>
-              <el-col :span="1">
+              <!-- <el-col :span="1">
                 <div class="grid-content bg-purple sh_center">
                   <i class="el-icon-delete"></i>
                 </div>
-              </el-col>
+              </el-col> -->
             </el-row>
 
-            <div v-for="(item,index) in userDataList" :key="index" v-if="userDataList.length">
+            <div>
               <el-row class="el_row_body">
                 <el-col :span="4">
                   <div class="grid-content bg-purple">
@@ -89,7 +79,7 @@
                 <el-col :span="3">
                   <div class="grid-content bg-purple">{{item.goods.nowPrice}}元</div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="7">
                   <div class="grid-content bg-purple sh_center">
                     <el-button size="mini" type="" round @click="dialogTableVisible = true; seeRecord(item.goodsSn)">查看竞价记录</el-button>
                   </div>
@@ -101,9 +91,9 @@
                     <el-button size="mini" type="primary" round v-else>已发货</el-button>
                   </div>
                 </el-col>
-                <el-col :span="1">
+                <!-- <el-col :span="1">
                   <div class="grid-content bg-purple"></div>
-                </el-col>
+                </el-col> -->
               </el-row>
             </div>
           </div>
@@ -171,28 +161,45 @@ export default {
           }
 
           this.userDataList = res.data.data;
+          // 时间戳转时间
+          for (var i = 0; i < this.userDataList.length; i++) {
+            var time = this.userDataList[i].createTime;
+            function getLocalTime(time) {
+              var unixTimestamp = new Date(time)
+              return unixTimestamp.toLocaleString()
+            }
+            this.userDataList[i].createTime = getLocalTime(time).split(' ')[0]
+          }
           resolve(res.data.data)
         }).catch(err => {
 
         })
       })
     },
-    // 当前商品所有竞价记录
+    // 当前订单所有竞价记录
     seeRecord(id) {
-      axios.get(Config.userDataList, {
+      axios.get(Config.getOrdersByGoodsSn, {
         params: {
           goodsSn: id
         }
       }).then(res => {
-        console.log('当前商品竞价记录', res.data)
+        console.log('当前订单所有竞价记录', res.data)
         // 判断是否有权限
         if (res.data == 'No permissions') {
           this.$router.push({ path: '/login' });
           return
         }
-
         this.gridData = res.data.data;
-        console.log('商品竞价详情', this.gridData)
+        // 时间戳转时间
+        for (var i = 0; i < res.data.data.length; i++) {
+          var time = this.gridData[i].createTime;
+          function getLocalTime(time) {
+            var unixTimestamp = new Date(time)
+            return unixTimestamp.toLocaleString()
+          }
+          this.gridData[i].createTime = getLocalTime(time)
+        }
+        //console.log('当前订单所有竞价记录', this.gridData)
       }).catch(err => {
 
       })
