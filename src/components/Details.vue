@@ -74,8 +74,9 @@
         <p>竞价价格：
           <span>{{Number(goodsDetail.nowPrice) + Number(radioData)}}元</span>
         </p>
+        <span>{{intervalTime}}s</span>
       </div>
-      <el-button type="info" round size="small" class="btn_close" @click="dialogTableVisible = false">取消</el-button>
+      <el-button type="info" round size="small" class="btn_close" @click="clickCancel">取消</el-button>
       <el-button type="primary" round size="small" class="btn_success" v-if="goodsDetail.status == '1'" @click="starBidPrice(goodsDetail.nowPrice)">参与竞价</el-button>
     </el-dialog>
   </div>
@@ -84,7 +85,7 @@
 <script>
 import axios from 'axios'
 import Config from '@/config'
-
+var Timer = null;
 export default {
   data() {
     return {
@@ -92,7 +93,8 @@ export default {
       goodsDetail: [],  //列表数据
       CountDown: 0, //倒计时时间
       mainImg: '',  //大图
-      dialogTableVisible: false
+      dialogTableVisible: false,
+      intervalTime: 5 //商品加价倒计时
     }
   },
   methods: {
@@ -112,9 +114,21 @@ export default {
         return
       } else {
         this.detaliData();
-        this.dialogTableVisible = true
+        this.dialogTableVisible = true;
+        // 商品加价倒计时
+        
+        clearInterval(Timer)
+        this.intervalTime = 5
+        Timer = setInterval(() => {
+          this.intervalTime--
+          if (this.intervalTime == 0) {
+            console.log('倒计时时间',this.intervalTime)
+            location.reload();
+          }
+        }, 1000)
       }
     },
+    //参与竞价
     starBidPrice(data) {
       axios.get(Config.bidPrice, {
         params: {
@@ -124,6 +138,7 @@ export default {
         }
       }).then(res => {
         console.log(res.data.message)
+        clearInterval(Timer)//清除定时器
         // 判断是否有权限
         if (res.data == 'No permissions') {
           this.$router.push({ path: '/login' });
@@ -140,6 +155,11 @@ export default {
           showConfirmButton: true
         });
       })
+    },
+    //取消弹窗
+    clickCancel(){
+      this.dialogTableVisible = false;
+      clearInterval(Timer)//清除定时器
     },
     detaliData() {
       var id = this.$route.query.goodsSn;
@@ -234,6 +254,14 @@ export default {
 .pricePopup {
   width: 100%;
   margin: 0 0 25px;
+  position: relative;
+}
+.pricePopup > span {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  font-size: 20px;
+  color: #ee2e2e;
 }
 .pricePopup p {
   font-size: 17px;

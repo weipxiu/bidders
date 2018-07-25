@@ -6,8 +6,8 @@
           <el-col :span="10">
             <div class="grid-content bg-purple">
               <a href="./home">
-                <img src="@/assets/images/logo.png" width="166" height="40" alt="" class="logo">
-                <img src="@/assets/images/logo_1.png" width="72" height="54" alt="" class="logo_1">
+                <img src="@/assets/images/logo.svg" width="316" height="65" alt="" class="logo">
+                <!-- <img src="@/assets/images/logo_1.png" width="72" height="54" alt="" class="logo_1"> -->
               </a>
             </div>
           </el-col>
@@ -52,8 +52,8 @@ export default {
         axios.get(Config.userExit, {
           params: {}
         }).then(res => {
-          console.log(res)
-          this.$router.push({ path: '/login' })
+          console.log('退出登录',res)
+          //this.$router.push({ path: '/login' });
         }).catch(err => {
 
         })

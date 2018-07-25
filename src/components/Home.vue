@@ -65,7 +65,8 @@
                     <el-row v-else>
                       <el-col :span="5">预 计</el-col>
                       <el-col :span="19">
-                        <span class="tiemEnd">当前竞拍已经结束</span></el-col>
+                        <span class="tiemEnd">当前竞拍已经结束</span>
+                      </el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">参与数</el-col>
@@ -85,7 +86,7 @@
             </el-row>
           </div>
           <!-- 分页 -->
-          <el-pagination background layout="prev, pager, next" :total="commoditylist.length" :page-size="50" v-if="commoditylist.length">
+          <el-pagination background layout="prev, pager, next" :total="commoditylist.length" :page-size="100" v-if="commoditylist.length">
           </el-pagination>
         </div>
       </el-main>
@@ -98,7 +99,7 @@ import axios from 'axios'
 import screen from '@/assets/js'
 import Config from '@/config'
 import { Loading } from 'element-ui';
-
+axios.defaults.withCredentials = true;
 
 export default {
   data() {
@@ -112,13 +113,14 @@ export default {
     inliListData() {
       return new Promise((resolve, reject) => {
         Loading.service();
-        axios.get(Config.getgoodsList, {
+        axios.get('/songhengstore/goods/getgoods', {
           params: {
             // id: 3884108
-          }
-          // headers: {
-          //   'Content-Type': 'application/x-www-form-urlencoded'
-          // }
+          },
+          headers: {
+            // 'Content-Type': 'application/x-www-form-urlencoded'
+            //'test': document.cookie
+          },
         }).then(res => {
           // 判断是否有权限
           if(res.data == 'No permissions'){
@@ -137,7 +139,7 @@ export default {
           this.commoditylist = res.data.data
           for (var i = 0; i < res.data.data.length; i++) {
             // 倒计时
-            var countDown =  this.commoditylist[i].enddate - Date.parse(new Date());
+            var countDown = this.commoditylist[i].enddate - Date.parse(new Date());
             var s = countDown / 1000;   //需要转的秒数
             if (countDown > 0) {
               var m;
@@ -149,7 +151,7 @@ export default {
                 var s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60));
                 return result = h + "时" + m + "分" + s + "秒"
               }
-            }else{
+            } else {
               this.commoditylist[i].enddate = '0'
             }
           }
@@ -189,6 +191,22 @@ export default {
     }
   },
   created: function () {
+    // console.log('66666666666', window.location.hash)
+    var url = window.location.href;
+    // var theRequest = new Object();
+    // if (url.indexOf("?") != -1) {
+    //   var url = location.search.substring(1,location.search.length);  //获取url中"?"符后的字符串
+
+    //   var strs = url.split("&");
+    //   for (var i = 0; i < strs.length; i++) {
+    //     theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
+    //   }
+    // }
+    // console.log(theRequest)
+    // cookie存储
+    // console.log(document.cookie);
+    // document.cookie = location.search.substring(1,location.search.length)
+    // console.log(document.cookie);
     //初始化请求数据
     this.inliListData()
   }

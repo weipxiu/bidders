@@ -59,6 +59,9 @@ html {
 .el-button--mini, .el-button--mini.is-round{
   padding:5px 15px;
 }
+.el-dialog--center .el-dialog__body{
+  padding-top:10px
+}
 #app {
   min-height: 100%;
   position: relative;

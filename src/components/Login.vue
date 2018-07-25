@@ -45,20 +45,20 @@ export default {
 <style scoped>
 .centent_body {
   width: 1200px;
-  min-height:500px;
+  min-height: 500px;
   margin: 0 auto;
   position: relative;
 }
 .login {
   text-align: center;
   width: 150px;
-  height:150px;
+  height: 150px;
   position: absolute;
-  top:0;
-  left:0;
-  bottom:0;
-  right:0;
-  margin:auto
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 .login p {
   margin: 10px auto;
