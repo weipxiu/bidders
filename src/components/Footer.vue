@@ -25,18 +25,17 @@ export default {
 <style scoped>
 .sh_footer {
   width: 100%;
-  height: 100px;
+  height: 70px;
   margin: 0 auto;
   /* background: #3a3a3a url("assets/images/footerBg.png") repeat; */
   background: #2e2e2e;
   position: absolute;
   bottom: 0;
-  padding-top:22px;
   box-sizing: border-box;
 }
 .el-footer {
   font-size: 14px;
-  line-height: 60px;
+  line-height: 70px;
   color: #fff;
   text-align: center;
   width: 1200px;
