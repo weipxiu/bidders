@@ -52,7 +52,7 @@ export default {
           params: {}
         }).then(res => {
           if(res.status == 200){
-            //this.$router.push({ path: '/login' });
+            this.$router.push({ path: '/login' });
           }
         })
       }

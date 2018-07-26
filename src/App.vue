@@ -56,11 +56,36 @@ html {
   text-align: center;
   text-indent: 0 !important;
 }
-.el-button--mini, .el-button--mini.is-round{
-  padding:5px 15px;
+.content .el-button--mini,
+.content .el-button--mini.is-round {
+  padding: 5px 15px;
 }
-.el-dialog--center .el-dialog__body{
-  padding-top:10px
+.content .el-dialog--center .el-dialog__body {
+  padding-top: 10px;
+}
+.content .my_btn {
+  background: #ea3737;
+}
+.content .el-menu--horizontal > .el-menu-item {
+  font-weight: bold;
+}
+.content .el-breadcrumb {
+  margin-left: 12px;
+}
+.content .el-button--primary {
+  background-color: #ee2e2e;
+  border: 1px solid #ee2e2e;
+}
+.content .price {
+  font-size: 30px;
+  font-weight: bold;
+  color: #ee2e2e;
+}
+.content .CountDown{
+  color: #ee2e2e;
+}
+.content .el-radio-button__inner{
+  background: #efefef
 }
 #app {
   min-height: 100%;

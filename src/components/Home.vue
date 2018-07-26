@@ -8,14 +8,14 @@
             <el-row type="flex" justify="space-between" class="row-bg">
               <el-col :span="4">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#333">
                     <el-menu-item index="1" @click="handleSelect">正在拍卖</el-menu-item>
                   </el-menu>
                 </div>
               </el-col>
               <el-col :span="8">
                 <div class="grid-content bg-purple">
-                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
+                  <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#333">
                     <el-menu-item index="1" @click="handleSelect">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
@@ -29,9 +29,9 @@
                     </el-submenu>
                     <el-submenu index="4">
                       <template slot="title">拍卖状态</template>
-                      <el-menu-item index="4-1" @click="auctionStatus('未开始')">未开始</el-menu-item>
-                      <el-menu-item index="4-2" @click="auctionStatus('竞拍中')">竞拍中</el-menu-item>
-                      <el-menu-item index="4-3" @click="auctionStatus('已结束')">已结束</el-menu-item>
+                      <el-menu-item index="4-1" @click="auctionStatus({before:1})">未开始</el-menu-item>
+                      <el-menu-item index="4-2" @click="auctionStatus({underway:1})">竞拍中</el-menu-item>
+                      <el-menu-item index="4-3" @click="auctionStatus({after:1})">已结束</el-menu-item>
                     </el-submenu>
                   </el-menu>
                 </div>
@@ -44,7 +44,10 @@
             <el-row :gutter="20" type="" class="row-bg" justify="space-between">
               <el-col :span="6" v-for="(item,index) in commoditylist" :key="index">
                 <div class="grid-content bg-purple" @click="onClickList(item.goodssn)">
-                  <img class="comImg" :src="item.imgs[0]" alt="">
+                  <div class="Img">
+                    <img class="comImg" :src="item.imgs[0]" alt="">
+                    <div class="opacityShow" v-if="item.goodstatus == '已结束'">已结束</div>
+                  </div>
                   <p class="title">{{item.goodstitle}}</p>
                   <div class="parameter">
                     <el-row>
@@ -70,14 +73,14 @@
                     </el-row>
                     <el-row>
                       <el-col :span="5">参与数</el-col>
-                      <el-col :span="10">{{item.number}}人报名</el-col>
+                      <el-col :span="10">{{item.number}}人</el-col>
                       <el-col :span="9">
                         <el-button size="mini" type="success" round v-if="item.goodstatus == '即将开始'">即将开始</el-button>
                         <el-button size="mini" type="danger" round v-else-if="item.goodstatus == '正在进行'">正在进行</el-button>
                         <el-button size="mini" type="info" round v-else-if="item.goodstatus == '已结束'" disabled>已结束</el-button>
                         <el-button size="mini" type="warning" round v-else-if="item.goodstatus == '未开始'">未开始</el-button>
                         <el-button size="mini" type="info" round v-else-if="item.goodstatus == '已下架'" disabled>已下架</el-button>
-                        <el-button size="mini" type="primary" round v-else>竞拍中</el-button>
+                        <el-button size="mini" type="primary" round v-else class="my_btn">竞拍中</el-button>
                       </el-col>
                     </el-row>
                   </div>
@@ -99,7 +102,7 @@ import axios from 'axios'
 import screen from '@/assets/js'
 import Config from '@/config'
 import { Loading } from 'element-ui';
-axios.defaults.withCredentials = true;
+
 
 export default {
   data() {
@@ -110,12 +113,15 @@ export default {
     }
   },
   methods: {
-    inliListData() {
+    inliListData(data) {
       return new Promise((resolve, reject) => {
         Loading.service();
-        axios.get('/songhengstore/goods/getgoods', {
+        axios.get(Config.getgoodsList, {
           params: {
-            // id: 3884108
+            before: data ? data.before : '',
+            underway: data ? data.underway : '',
+            after: data ? data.after : '',
+            soldout: data ? data.soldout : ''
           },
           headers: {
             // 'Content-Type': 'application/x-www-form-urlencoded'
@@ -123,7 +129,7 @@ export default {
           },
         }).then(res => {
           // 判断是否有权限
-          if(res.data == 'No permissions'){
+          if (res.data == 'No permissions') {
             this.$router.push({ path: '/login' });
             return
           }
@@ -166,28 +172,27 @@ export default {
     handleSelect() {
       this.inliListData()
     },
+    //跳转详情页
     onClickList(id) {
-      this.inliListData().then(() => {
+      if (id) {
         this.$router.push({ path: '/Details', query: { goodsSn: id } })
-      })
+      }
     },
+    //从小到大排序
     LowToHight(key) {
       this.inliListData().then(() => {
         this.commoditylist.sort(screen.currentPrice(key))
       })
     },
+    //从打到小排序
     hightToLow(key) {
       this.inliListData().then(() => {
         this.commoditylist.sort(screen.currentPrice(key)).reverse()
       })
     },
     //拍卖状态筛选
-    auctionStatus(key) {
-      this.inliListData().then(() => {
-        this.commoditylist = this.commoditylist.filter(function (item) {
-          return key == item.goodstatus
-        })
-      })
+    auctionStatus(data) {
+      this.inliListData(data)
     }
   },
   created: function () {
@@ -208,7 +213,7 @@ export default {
     // document.cookie = location.search.substring(1,location.search.length)
     // console.log(document.cookie);
     //初始化请求数据
-    this.inliListData()
+    this.inliListData({ soldout: 0 })
   }
 }
 </script>
@@ -225,6 +230,25 @@ export default {
   width: 1200px;
   margin: 0 auto;
 }
+.Img {
+  position: relative;
+  width: 283px;
+  height: 178px;
+  overflow: hidden;
+}
+.Img .opacityShow {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 34px;
+  text-align: center;
+  line-height: 178px;
+  font-weight: bold;
+  color: #fff;
+}
 
 /*商品列表*/
 .comList {
@@ -236,8 +260,9 @@ export default {
 }
 
 .comImg {
-  width: 100%;
   height: 178px;
+  margin: 0 auto;
+  display: block;
 }
 .comList .title {
   height: 32px;
@@ -266,12 +291,13 @@ export default {
   padding: 15px 0;
 }
 .comList .price {
-  color: #66b1ff;
+  color: #c42222;
   font-size: 18px;
+  font-weight: bold;
 }
 .comList .tiemEnd {
   font-weight: bold;
-  color: #333;
+  color: #4e4e4e;
   font-size: 15px;
 }
 </style>

@@ -8,7 +8,7 @@ import Login from '@/components/Login'
 Vue.use( Router )
 
 let router = new Router( {
-    mode: 'history',
+    mode: 'hash',
     linkActiveClass: 'isActive',
     routes: [ {
             path: '/',

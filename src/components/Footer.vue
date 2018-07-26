@@ -3,8 +3,7 @@
     <!-- 底部 -->
     <el-footer>
       <div class="">
-        <p>嵩恒网络科技有限公司拍卖系统</p>
-        <p>© 2016-2018 鄂ICP备 16001853号-1</p>
+        <p>嵩恒网络科技有限公司内部拍卖系统</p>
       </div>
     </el-footer>
   </div>
@@ -37,7 +36,7 @@ export default {
 }
 .el-footer {
   font-size: 14px;
-  line-height: 30px;
+  line-height: 60px;
   color: #fff;
   text-align: center;
   width: 1200px;

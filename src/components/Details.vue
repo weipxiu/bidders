@@ -23,26 +23,25 @@
               </el-col>
               <el-col :span="12" class="dt_parame">
                 <el-row>
-                  <el-col :span="3">当前价：</el-col>
-                  <el-col :span="21">
-                    <span class="price">{{goodsDetail.nowPrice}}元</span>
+                  <el-col :span="6">当前价：</el-col>
+                  <el-col :span="18"><span class="price">{{goodsDetail.nowPrice}}元</span>
                   </el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="3">起拍价：</el-col>
-                  <el-col :span="21">{{goodsDetail.floorPrice}}元</el-col>
+                  <el-col :span="6">起拍价：</el-col>
+                  <el-col :span="18">{{goodsDetail.floorPrice}}元</el-col>
                 </el-row>
                 <el-row v-if="CountDown != 0">
-                  <el-col :span="3">距结束：</el-col>
-                  <el-col :span="21">{{CountDown}}</el-col>
+                  <el-col :span="6">距结束：</el-col>
+                  <el-col :span="18" class="CountDown">{{CountDown}}</el-col>
                 </el-row>
                 <el-row v-else>
-                  <el-col :span="3">距结束：</el-col>
-                  <el-col :span="21">该商品拍卖已经结束</el-col>
+                  <el-col :span="6">距结束：</el-col>
+                  <el-col :span="18">该商品拍卖已经结束</el-col>
                 </el-row>
                 <el-row>
-                  <el-col :span="3">加价：</el-col>
-                  <el-col :span="21">
+                  <el-col :span="6">加价：</el-col>
+                  <el-col :span="18">
                     <el-radio-group v-model="radioData" size="small">
                       <el-radio-button :label="item" v-for="(item,index) in goodsDetail.addMoney" :key="index" :disabled="goodsDetail.status != '1'">{{item+'元'}}</el-radio-button>
                     </el-radio-group>
@@ -59,8 +58,7 @@
               </el-col>
             </el-row>
             <div class="details_text">
-              <p>
-                {{goodsDetail.goodsDesc}}
+              <p v-html="goodsDetail.goodsDesc">
               </p>
             </div>
           </div>
@@ -68,16 +66,15 @@
       </el-main>
     </el-container>
     <!-- 竞价弹窗 -->
-    <el-dialog type='warning' :showClose="false" title="注意！由于参与竞拍人数过多，当前价格可能与页面显示价格不符！" :visible="dialogTableVisible" width="350px" center>
+    <el-dialog class="el-dialog-padding" type='warning' :showClose="false" title="注意！由于参与竞拍人数过多，当前价格可能与页面显示价格不符！" :visible="dialogTableVisible" width="350px" left>
       <div class="pricePopup">
-        <p>当前价格：{{goodsDetail.nowPrice}}元</p>
-        <p>竞价价格：
-          <span>{{Number(goodsDetail.nowPrice) + Number(radioData)}}元</span>
+        <p>当前价格：<span>{{goodsDetail.nowPrice}}</span>元</p>
+        <p>竞价价格：<span>{{Number(goodsDetail.nowPrice) + Number(radioData)}}元</span>
         </p>
         <span>{{intervalTime}}s</span>
       </div>
       <el-button type="info" round size="small" class="btn_close" @click="clickCancel">取消</el-button>
-      <el-button type="primary" round size="small" class="btn_success" v-if="goodsDetail.status == '1'" @click="starBidPrice(goodsDetail.nowPrice)">参与竞价</el-button>
+      <el-button type="primary" round size="small" class="btn_success" v-if="goodsDetail.status == '1'" @click="starBidPrice(goodsDetail.nowPrice)">确认竞价</el-button>
     </el-dialog>
   </div>
 </template>
@@ -116,13 +113,13 @@ export default {
         this.detaliData();
         this.dialogTableVisible = true;
         // 商品加价倒计时
-        
+
         clearInterval(Timer)
         this.intervalTime = 5
         Timer = setInterval(() => {
           this.intervalTime--
           if (this.intervalTime == 0) {
-            console.log('倒计时时间',this.intervalTime)
+            console.log('倒计时时间', this.intervalTime)
             location.reload();
           }
         }, 1000)
@@ -144,7 +141,21 @@ export default {
           this.$router.push({ path: '/login' });
           return
         }
-
+        if (res.data.status == 1) {
+          this.$confirm('出价成功，请在个人中心查看订单', {
+            type: 'success ',
+            center: true,
+            showCancelButton: true,
+            showConfirmButton: true
+          });
+        } else {
+          this.$confirm('出价失败', {
+            type: 'success ',
+            center: true,
+            showCancelButton: true,
+            showConfirmButton: true
+          });
+        }
         this.dialogTableVisible = false; //关闭弹窗
         this.detaliData();
       }).catch(err => {
@@ -157,7 +168,7 @@ export default {
       })
     },
     //取消弹窗
-    clickCancel(){
+    clickCancel() {
       this.dialogTableVisible = false;
       clearInterval(Timer)//清除定时器
     },
@@ -238,17 +249,24 @@ export default {
   text-indent: 2em;
   margin: 10px 0;
 }
-.dt_parame {
-  padding: 100px 0 0 35px;
+.detaList .dt_parame {
+  padding: 100px 0 0 85px;
 }
-.dt_parame .el-col {
+.detaList .dt_parame .el-col {
   font-size: 16px;
   color: #333;
   height: 50px;
+  line-height: 50px;
 }
-.dt_parame .el-col .btn {
+.detaList .dt_parame div:nth-child(1){
+  font-weight: bold
+}
+.detaList .dt_parame .el-col .btn {
   margin: 30px auto 0;
   padding: 10px 40px;
+}
+.detaList .el-dialog-padding{
+  padding:65px
 }
 /*商品弹窗*/
 .pricePopup {
@@ -264,12 +282,16 @@ export default {
   color: #ee2e2e;
 }
 .pricePopup p {
-  font-size: 17px;
+  font-size: 15px;
+  font-weight: bold;
   height: 32px;
   line-height: 32px;
 }
-.pricePopup p span {
+.pricePopup p:nth-of-type(2) span {
   color: #ee2e2e;
+  font-weight: bold;
+  font-size:26px;
+  line-height: 32px;
 }
 .el-dialog__body {
   padding-top: 0;
@@ -277,10 +299,17 @@ export default {
 .btn_close {
   width: 100px;
   padding: 8px 15px;
+  background: #e3e3e3;
+  border:1px solid #e3e3e3;
+  color: #717171;
+  margin-left:40px
 }
 .btn_success {
   width: 100px;
   padding: 8px 15px;
   float: right;
+  background: #ee2e2e;
+  border:1px solid #ee2e2e;
+  margin-right:40px
 }
 </style>

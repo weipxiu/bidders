@@ -8,6 +8,7 @@ import Axios from 'axios'
 import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = false
+Axios.defaults.withCredentials = true;
 
 Vue.use(ElementUI,VueAxios,Axios);
 

@@ -14,10 +14,11 @@
                 <div class="grid-content bg-purple">
                   <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#EDEDED" text-color="#8D8D8D" active-text-color="#ee2e2e">
                     <el-menu-item index="1" @click="initListData">全部订单</el-menu-item>
-                    <el-menu-item index="20" @click="personalStatus(2)">已发货</el-menu-item>
-                    <el-menu-item index="30" @click="personalStatus(1)">已完成</el-menu-item>
-                    <el-menu-item index="40" @click="personalStatus(0)">竞价失败</el-menu-item>
-                    <li style="width:570px;float: left;height: 36px;line-height: 36px;outline: none;"></li>
+                    <el-menu-item index="20" @click="personalStatus(3)">拍卖进行中</el-menu-item>
+                    <el-menu-item index="30" @click="personalStatus(2)">已发货</el-menu-item>
+                    <el-menu-item index="40" @click="personalStatus(1)">已完成</el-menu-item>
+                    <el-menu-item index="50" @click="personalStatus(0)">竞价失败</el-menu-item>
+                    <li style="width:450px;float: left;height: 36px;line-height: 36px;outline: none;"></li>
                     <el-menu-item index="10" @click="initListData">综合排序</el-menu-item>
                     <el-submenu index="2">
                       <template slot="title">时间</template>
@@ -48,10 +49,13 @@
                 <div class="grid-content bg-purple">起拍价</div>
               </el-col>
               <el-col :span="3">
-                <div class="grid-content bg-purple">竞价价格</div>
+                <div class="grid-content bg-purple">当前价格</div>
               </el-col>
-              <el-col :span="7">
+              <el-col :span="4">
                 <div class="grid-content bg-purple sh_center">记录</div>
+              </el-col>
+              <el-col :span="3">
+                <div class="grid-content bg-purple sh_center"></div>
               </el-col>
               <el-col :span="3">
                 <div class="grid-content bg-purple sh_center">订单状态</div>
@@ -79,16 +83,22 @@
                 <el-col :span="3">
                   <div class="grid-content bg-purple">{{item.goods.nowPrice}}元</div>
                 </el-col>
-                <el-col :span="7">
+                <el-col :span="4">
                   <div class="grid-content bg-purple sh_center">
                     <el-button size="mini" type="" round @click="dialogTableVisible = true; seeRecord(item.goodsSn)">查看竞价记录</el-button>
                   </div>
                 </el-col>
                 <el-col :span="3">
                   <div class="grid-content bg-purple sh_center">
+                    <el-button size="mini" type="primary" round @click="priceIncrease(item.goodsSn)" :disabled="currentDate >= item.goods.endDate">前往加价</el-button>
+                  </div>
+                </el-col>
+                <el-col :span="3">
+                  <div class="grid-content bg-purple sh_center">
                     <el-button size="mini" type="info" round v-if="item.orderStatus == 0">竞拍失败</el-button>
                     <el-button size="mini" type="success" round v-else-if="item.orderStatus == 1">交易成交</el-button>
-                    <el-button size="mini" type="primary" round v-else>已发货</el-button>
+                    <el-button size="mini" type="success" round v-else-if="item.orderStatus == 2">已发货</el-button>
+                    <el-button size="mini" type="primary" round v-else>拍卖进行中</el-button>
                   </div>
                 </el-col>
                 <!-- <el-col :span="1">
@@ -128,6 +138,7 @@ export default {
   data() {
     return {
       userDataList: [], //数据列表
+      currentDate: '',//当前时间戳
       items: [
         { message: 'Foo' },
         { message: 'Bar' }
@@ -144,6 +155,10 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
+    // 前往加价
+    priceIncrease(id) {
+      this.$router.push({ path: '/Details', query: { goodsSn: id } })
+    },
     //拿到数据列表
     initListData(data) {
       return new Promise((resolve, reject) => {
@@ -159,7 +174,7 @@ export default {
             this.$router.push({ path: '/login' });
             return
           }
-
+          this.currentDate = Date.parse(new Date());;//当前时间戳
           this.userDataList = res.data.data;
           // 时间戳转时间
           for (var i = 0; i < this.userDataList.length; i++) {
@@ -281,5 +296,10 @@ p.prompt {
   color: #666;
   text-align: center;
   margin-top: 30px;
+}
+.content .el-button--primary.is-disabled {
+  background-color: #909399;
+  border-color: #909399;
+  color: #fff;
 }
 </style>
