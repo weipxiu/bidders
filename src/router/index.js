@@ -5,12 +5,25 @@ import User from '@/components/User'
 import Details from '@/components/Details'
 import Login from '@/components/Login'
 
-Vue.use( Router )
+Vue.use(Router)
 
-let router = new Router( {
-    mode: 'hash',
+let router = new Router({
+    scrollBehavior(to, from, savePosition) { //滚动行为
+        //console.log(to) //进入的目标对象
+        //console.log(from) //离开的路由对象
+        //console.log(savePosition)//记录滚动路由坐标
+        if (savePosition) {
+            return savePosition //针对鼠标点击浏览器前进后台，如果记录到坐标存在就返回出来之前坐标，
+        } else {
+            return {
+                x: 0,
+                y: 0
+            } //否则都返回默认的（0,0）
+        }
+    },
+    mode: 'history',
     linkActiveClass: 'isActive',
-    routes: [ {
+    routes: [{
             path: '/',
             name: 'Home',
             component: Home
@@ -35,6 +48,6 @@ let router = new Router( {
             redirect: '/'
         }
     ]
-} )
+})
 
 export default router

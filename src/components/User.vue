@@ -71,17 +71,17 @@
               <el-row class="el_row_body">
                 <el-col :span="4">
                   <div class="grid-content bg-purple">
-                    <img class="comImg" :src="item.goods.imgsList[0]" width="90" height="60" alt="">
+                    <img class="comImg" :src="item.goods.imgsList[0]" height="60" alt="">
                   </div>
                 </el-col>
                 <el-col :span="4">
                   <div class="grid-content bg-purple sh_indent">{{item.goods.goodsTitle}}</div>
                 </el-col>
                 <el-col :span="3">
-                  <div class="grid-content bg-purple">{{item.goods.floorPrice}}元</div>
+                  <div class="grid-content bg-purple">¥{{item.goods.floorPrice}}</div>
                 </el-col>
                 <el-col :span="3">
-                  <div class="grid-content bg-purple">{{item.goods.nowPrice}}元</div>
+                  <div class="grid-content bg-purple">¥{{item.goods.nowPrice}}</div>
                 </el-col>
                 <el-col :span="4">
                   <div class="grid-content bg-purple sh_center">
@@ -116,10 +116,11 @@
 
     </el-container>
 
-    <el-dialog title="pad air9成新银灰色 ipad air9成新银灰色 ipad air9成新银灰" :visible.sync="dialogTableVisible" width="610px" center>
-      <p class="starTime">
-        <i class="el-icon-time"></i> 开始时间：2018年7月20日</p>
-      <img :src="gridData[0].goods.imgsList[0]" alt="" v-if="gridData.length">
+    <el-dialog title="" :visible.sync="dialogTableVisible" width="610px" center>
+      <h2 style="font-size:22px; color:#555; text-align:center;margin: -20px auto 20px; font-weight:normal" v-if="gridData.length">{{gridData[0].goods.goodsTitle}}</h2>
+      <p class="starTime" v-if="gridData.length">
+        <i class="el-icon-time"></i> {{gridData[0].goods.beginDate}}</p>
+      <img :src="gridData[0].goods.imgsList[0]" alt="" v-if="gridData.length" class="priceImg">
       <el-table :data="gridData">
         <el-table-column property="createTime" label="时间" width="280"></el-table-column>
         <el-table-column property="goodsMoney" label="竞价价格" width="280"></el-table-column>
@@ -168,12 +169,13 @@ export default {
             sortTime: data ? data.sortTime : ''
           }
         }).then(res => {
-          console.log(res.data.data)
           // 判断是否有权限
           if (res.data == 'No permissions') {
             this.$router.push({ path: '/login' });
             return
           }
+          console.log(res.data.data)
+      
           this.currentDate = Date.parse(new Date());;//当前时间戳
           this.userDataList = res.data.data;
           // 时间戳转时间
@@ -207,14 +209,16 @@ export default {
         this.gridData = res.data.data;
         // 时间戳转时间
         for (var i = 0; i < res.data.data.length; i++) {
-          var time = this.gridData[i].createTime;
+          var timeCreateTime = this.gridData[i].createTime;
+          var timeBeginDate = this.gridData[i].goods.beginDate;
           function getLocalTime(time) {
             var unixTimestamp = new Date(time)
             return unixTimestamp.toLocaleString()
           }
-          this.gridData[i].createTime = getLocalTime(time)
+          this.gridData[i].createTime = getLocalTime(timeCreateTime) //拍卖竞价列表时间
+           this.gridData[i].goods.beginDate = getLocalTime(timeBeginDate) //拍卖开始时间
         }
-        //console.log('当前订单所有竞价记录', this.gridData)
+        console.log('当前订单所有竞价记录', this.gridData)
       }).catch(err => {
 
       })
@@ -243,10 +247,7 @@ export default {
   overflow: hidden;
   margin: 30px auto;
 }
-.content {
-  width: 1200px;
-  margin: 0 auto;
-}
+
 .nav >>> .el-submenu__title i {
   color: #8d8d8d;
 }
@@ -285,11 +286,17 @@ export default {
 }
 .el_row_body .comImg {
   vertical-align: middle;
+  max-width: 90px;
 }
 .starTime {
   font-size: 16px;
   text-indent: 5px;
   margin-bottom: 10px;
+}
+.priceImg{
+  display: block;
+  margin:0 auto;
+  max-width: 100%;
 }
 p.prompt {
   font-size: 16px;

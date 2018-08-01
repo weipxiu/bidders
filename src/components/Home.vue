@@ -53,23 +53,34 @@
                     <el-row>
                       <el-col :span="5">当前价</el-col>
                       <el-col :span="19">
-                        <span class="price">{{item.nowprice}}元</span>
+                        <span class="price">¥{{item.nowprice}}</span>
                       </el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">起拍价</el-col>
-                      <el-col :span="19">{{item.floorprice}}元</el-col>
+                      <el-col :span="19">¥{{item.floorprice}}</el-col>
                     </el-row>
-                    <el-row v-if="item.enddate != 0">
+                    <el-row v-if="item.goodstatus == '即将开始' || item.goodstatus == '未开始'">
                       <el-col :span="5">预 计</el-col>
                       <el-col :span="19">
-                        <span class="tiemEnd">{{item.enddate}}</span> 结束</el-col>
+                        <span class="tiemEnd" v-html="item.begindate1"></span> 后开始</el-col>
                     </el-row>
-                    <el-row v-else>
+                    <el-row v-else-if="item.goodstatus == '已结束'">
                       <el-col :span="5">预 计</el-col>
                       <el-col :span="19">
                         <span class="tiemEnd">当前竞拍已经结束</span>
                       </el-col>
+                    </el-row>
+                    <el-row v-else-if="item.goodstatus == '已下架'">
+                      <el-col :span="5">预 计</el-col>
+                      <el-col :span="19">
+                        <span class="tiemEnd">当前竞拍已经下架</span>
+                      </el-col>
+                    </el-row>
+                    <el-row v-else>
+                      <el-col :span="5">预 计</el-col>
+                      <el-col :span="19">
+                        <span class="tiemEnd" v-html="item.enddate1"></span> 结束</el-col>
                     </el-row>
                     <el-row>
                       <el-col :span="5">参与数</el-col>
@@ -123,10 +134,7 @@ export default {
             after: data ? data.after : '',
             soldout: data ? data.soldout : ''
           },
-          headers: {
-            // 'Content-Type': 'application/x-www-form-urlencoded'
-            //'test': document.cookie
-          },
+          headers: {},
         }).then(res => {
           // 判断是否有权限
           if (res.data == 'No permissions') {
@@ -143,22 +151,48 @@ export default {
           console.log(res.data)
 
           this.commoditylist = res.data.data
-          for (var i = 0; i < res.data.data.length; i++) {
+          // for (var i = 0; i < res.data.data.length; i++) {
+          //   // 倒计时
+          //   var countDown = this.commoditylist[i].enddate - Date.parse(new Date());
+          //   var s = countDown / 1000;   //需要转的秒数
+          //   if (countDown > 0) {
+          //     var m;
+          //     this.commoditylist[i].enddate = secondToDate(s)
+          //     // 输出05分59秒  时分秒
+          //     function secondToDate(result) {
+          //       var d = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600) % 24;
+          //       var h = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600);
+          //       var m = Math.floor((result / 60 % 60)) < 10 ? '0' + Math.floor((result / 60 % 60)) : Math.floor((result / 60 % 60));
+          //       var s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60));
+          //       return result = d + "天" + h + "时" + m + "分" + s + "秒"
+          //     }
+          //   } else {
+          //     this.commoditylist[i].enddate = '0'
+          //   }
+          // }
+          //支持天数展示
+          for (var i = 0; i < this.commoditylist.length; i++) {
             // 倒计时
-            var countDown = this.commoditylist[i].enddate - Date.parse(new Date());
-            var s = countDown / 1000;   //需要转的秒数
-            if (countDown > 0) {
-              var m;
-              this.commoditylist[i].enddate = secondToDate(s)
-              // 输出03天05分59秒  时分秒
-              function secondToDate(result) {
-                var h = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600);
-                var m = Math.floor((result / 60 % 60)) < 10 ? '0' + Math.floor((result / 60 % 60)) : Math.floor((result / 60 % 60));
-                var s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60));
-                return result = h + "时" + m + "分" + s + "秒"
-              }
+            var currentTimeStart = this.commoditylist[i].begindate - Date.parse(new Date()); //开始时间
+            var currentTime = this.commoditylist[i].enddate - Date.parse(new Date()); //结束时间
+
+            // 输出03天05分59秒  时分秒
+            function formatDuring(mss) {
+              var days = parseInt(mss / (1000 * 60 * 60 * 24));
+              var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+              var seconds = (mss % (1000 * 60)) / 1000;
+              return days + "<span>天</span>" + hours + "<span>时</span>" + minutes + "<span>分</span>" + seconds + "<span>秒</span>";
+            }
+
+            if (this.commoditylist[i].goodstatus == '未开始') { //未开始状态的预计时间 = 开始时间 - 当前时间
+              this.commoditylist[i].begindate1 = formatDuring(currentTimeStart)
             } else {
-              this.commoditylist[i].enddate = '0'
+              if (currentTime > 0) {
+                this.commoditylist[i].enddate1 = formatDuring(currentTime)
+              } else {
+                this.commoditylist[i].enddate1 = '0'
+              }
             }
           }
 
@@ -175,7 +209,13 @@ export default {
     //跳转详情页
     onClickList(id) {
       if (id) {
-        this.$router.push({ path: '/Details', query: { goodsSn: id } })
+        // this.$router.push({ path: '/Details', query: { goodsSn: id } })
+        let routeData = this.$router.resolve({
+          name: "Details",
+          query: { goodsSn: id },
+          params: { goodsSn: id }
+        });
+        window.open(routeData.resolved.name + routeData.href.substring(1), '_blank');
       }
     },
     //从小到大排序
@@ -196,23 +236,6 @@ export default {
     }
   },
   created: function () {
-    // console.log('66666666666', window.location.hash)
-    var url = window.location.href;
-    // var theRequest = new Object();
-    // if (url.indexOf("?") != -1) {
-    //   var url = location.search.substring(1,location.search.length);  //获取url中"?"符后的字符串
-
-    //   var strs = url.split("&");
-    //   for (var i = 0; i < strs.length; i++) {
-    //     theRequest[strs[i].split("=")[0]] = (strs[i].split("=")[1]);
-    //   }
-    // }
-    // console.log(theRequest)
-    // cookie存储
-    // console.log(document.cookie);
-    // document.cookie = location.search.substring(1,location.search.length)
-    // console.log(document.cookie);
-    //初始化请求数据
     this.inliListData({ soldout: 0 })
   }
 }
@@ -226,10 +249,7 @@ export default {
   line-height: 36px;
   overflow: hidden;
 }
-.content {
-  width: 1200px;
-  margin: 0 auto;
-}
+
 .Img {
   position: relative;
   width: 283px;

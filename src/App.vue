@@ -103,7 +103,7 @@ html {
 }
 .content {
   width: 1200px;
-  margin: 0 auto;
+  margin: 60px auto 0;
 }
 .el-menu-item,
 .el-submenu__title,

@@ -51,7 +51,7 @@ export default {
         axios.get(Config.userExit, {
           params: {}
         }).then(res => {
-          if(res.status == 200){
+          if (res.status == 200) {
             this.$router.push({ path: '/login' });
           }
         })
@@ -64,6 +64,11 @@ export default {
 <style scoped>
 .sh_header {
   background-color: #bb0000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
 }
 .sh_header_centent {
   width: 1200px;
