@@ -12,6 +12,6 @@ module.exports = {
         },
       }
     },
-    disableHostCheck: true
+    disableHostCheck: true //允许配置本地host别名进行访问
   }
 };
